@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, inject, Inject} from '@angular/core';
 import AddTodoComponent from '../../components/add-todo/add-todo.component';
 import {NgForOf, NgIf} from '@angular/common';
 import {NzColDirective, NzRowDirective} from 'ng-zorro-antd/grid';
@@ -39,7 +39,7 @@ export class RegisterViewComponent {
   registerError: boolean = false;
   registerErrorMessage: string = 'Username already taken. Please try again.';
 
-  userservice = Inject(UserService)
+  userservice = inject(UserService)
 
   register(){
     this.userservice.registerUser(this.username, this.name).subscribe({

@@ -13,7 +13,7 @@ export class UserService {
   constructor(){}
 
   registerUser(username:string, name:string):Observable<UserResponse> {
-    return this.http.post<UserResponse>(`${environment.api}/register`,
+    return this.http.post<UserResponse>(`${environment.api}/users/register`,
       {
         username,
         name,
