@@ -2,8 +2,10 @@ const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
 
 const todoRouter = require("./routes/todo-routes");
+const userRouter = require("./routes/user-route");
 const errorHandler = require("./middleware/error-handler-middleware");
 const connectDB = require("./database/connectDB");
 
@@ -26,6 +28,8 @@ if (process.env.NODE_ENV !== "production") {
 
 app.use("/todos", todoRouter);
 
+app.use("/users", userRouter);
+
 app.use(errorHandler);
 
 app.use(express.static("../angular-client/dist/mean-lecture/browser"));
@@ -37,6 +41,8 @@ app.get("*", (req, res) => {
     )
   );
 });
+
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
