@@ -38,3 +38,15 @@ exports.loginUser = async (req, res, next) => {
     }
 }
 
+exports.testMethod = async (req, res, next) => {
+    try {
+        return res.status(200).json({
+            message: 'Test erfolgreich'
+        })
+    }
+    catch (error)
+    {
+        next(error)
+    }
+}
+
