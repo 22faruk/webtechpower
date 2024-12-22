@@ -19,9 +19,17 @@
           </div>
           <div nz-col nzSpan="24">
             <nz-form-item>
-              <nz-form-label [nzSpan]="6">Username</nz-form-label>
+              <nz-form-label [nzSpan]="6">Name</nz-form-label>
               <nz-form-control [nzSpan]="18">
                 <input nz-input placeholder="Enter your name" [(ngModel)]="name" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="6">Email</nz-form-label>
+              <nz-form-control [nzSpan]="18">
+                <input nz-input type="email" placeholder="Enter your email" [(ngModel)]="email" />
               </nz-form-control>
             </nz-form-item>
           </div>
