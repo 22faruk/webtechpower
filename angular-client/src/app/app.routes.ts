@@ -6,5 +6,5 @@ import {LoginViewComponent} from '../pages/login-view/login-view.component';
 export const routes: Routes = [
   {path:'login',component:LoginViewComponent},
   {path:'register',component:RegisterViewComponent},
-  {path:'',component:TodoListComponent},
+  {path:'',component:LoginViewComponent},
 ];
