@@ -17,7 +17,7 @@
               </nz-form-control>
             </nz-form-item>
           </div>
-          <div nz-col nzSpan="24">
+          <div class="login-button" nz-col nzSpan="24">
             <nz-form-item>
               <nz-form-label [nzSpan]="6">Password</nz-form-label>
               <nz-form-control [nzSpan]="18">
@@ -25,9 +25,14 @@
               </nz-form-control>
             </nz-form-item>
           </div>
-          <div nz-col nzSpan="24">
+          <div class="login-button" nz-col nzSpan="24">
             <div nz-row nzJustify="center">
               <button nz-button nzType="primary" (click)="login()">Login</button>
+            </div>
+          </div>
+          <div nz-col nzSpan="24">
+            <div nz-row nzJustify="center">
+              <button nz-button nzType="primary" (click)="navigateToRegister()">Create new account</button>
             </div>
           </div>
         </div>

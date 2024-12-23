@@ -10,6 +10,7 @@ import {NzButtonComponent} from 'ng-zorro-antd/button';
 import {NgIf} from '@angular/common';
 import {UserService} from '../../services/user-service/user.service';
 import {LoginResponse} from '../../models/response/login-response';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-view',
@@ -36,7 +37,7 @@ export class LoginViewComponent {
 
   userservice = inject(UserService)
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   login(){
     // this.userservice.loginUser(this.username).subscribe({
@@ -54,5 +55,9 @@ export class LoginViewComponent {
         console.log(err)
       }
     });
+  }
+
+  navigateToRegister(){
+    this.router.navigate(['/register']);
   }
 }

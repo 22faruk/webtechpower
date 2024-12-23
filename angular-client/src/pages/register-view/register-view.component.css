@@ -29,6 +29,10 @@
   background-color: #dfdfdf;
 }
 
+.register-button {
+  padding-bottom: 12px;
+}
+
 nz-divider {
   margin-top: 0;
 }

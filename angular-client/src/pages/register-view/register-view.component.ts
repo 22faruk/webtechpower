@@ -9,6 +9,7 @@ import {NzInputDirective} from 'ng-zorro-antd/input';
 import {NzTypographyComponent} from 'ng-zorro-antd/typography';
 import {UserService} from '../../services/user-service/user.service';
 import {UserResponse} from '../../models/response/user-response';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-view',
@@ -37,6 +38,8 @@ export class RegisterViewComponent {
 
   userservice = inject(UserService)
 
+  constructor(private router: Router) { }
+
   register(){
     this.userservice.registerUser(this.username, this.name, this.password, this.email).subscribe({
       next: (res:UserResponse) => {
@@ -47,5 +50,9 @@ export class RegisterViewComponent {
         console.log(err);
       }
     });
+  }
+
+  navigateToLogin(){
+    this.router.navigate(['/login']);
   }
 }
