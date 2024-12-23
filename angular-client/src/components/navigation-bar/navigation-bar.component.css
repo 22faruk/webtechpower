@@ -2,3 +2,28 @@ button {
     margin-left: 4px;
     margin-right: 4px;
 }
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.logo {
+  width: 120px;
+  height: 31px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px 24px 16px 0;
+}
+
+.header-menu {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.header-menu li
+{
+  margin: 0 8px;
+}
