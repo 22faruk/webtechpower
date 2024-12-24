@@ -31,8 +31,8 @@ import { Router } from '@angular/router';
 export class RegisterViewComponent {
   username: string = '';
   name: string = '';
-  password: string = '';
   email: string= '';
+  password: string = '';
   registerError: boolean = false;
   registerErrorMessage: string = 'Username already taken. Please try again.';
 
@@ -41,7 +41,7 @@ export class RegisterViewComponent {
   constructor(private router: Router) { }
 
   register(){
-    this.userservice.registerUser(this.username, this.name, this.password, this.email).subscribe({
+    this.userservice.registerUser(this.username, this.name, this.email, this.password).subscribe({
       next: (res:UserResponse) => {
         console.log(res);
       },
