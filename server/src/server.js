@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 
 const todoRouter = require("./routes/todo-routes");
 const userRouter = require("./routes/user-route");
+const subjectRouter = require("./routes/subject-routes");
 const errorHandler = require("./middleware/error-handler-middleware");
 const connectDB = require("./database/connectDB");
 
@@ -29,6 +30,8 @@ if (process.env.NODE_ENV !== "production") {
 app.use("/todos", todoRouter);
 
 app.use("/users", userRouter);
+
+app.use("/subject", subjectRouter);
 
 app.use(errorHandler);
 
