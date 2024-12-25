@@ -1,8 +1,35 @@
+const { default: mongoose } = require("mongoose");
 const Subject = require("../models/subject-model");
+
+exports.getSubjects = async (req, res, next) => {
+    const userId = req.body.userId;
+    try {
+        const subjects = await Subject.find({ owner: userId });
+        return res.status(200).json({
+            message: `List of subjects of user ${userId}`,
+            data: subjects
+        });    
+    } catch (error) {
+        next(error);
+    }
+};
+
+exports.getSubject = async (req, res, next) => {
+    const subjectId = req.body.subjectId;
+    try {
+        const subject = await Subject.findById(subjectId);
+        return res.status(200).json({
+            message: `Subject ${subjectId}`,
+            data: subject
+        });
+    } catch (error) {
+        next(error);
+    }
+};
 
 //TODO: subjectName überprüfen ob unique. Ein User darf nicht zwei Subjects mit dem gleichem Namen haben.
 exports.createSubject = async (req, res, next) => {
-    let {owner, subjectName, directories} = req.body;
+    const {owner, subjectName, directories} = req.body;
     try {
         const newSubject = await new Subject({ owner, subjectName, directories }).save();
         return res.status(201).json({
