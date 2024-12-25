@@ -27,13 +27,12 @@ exports.getDirectories = async (req, res, next) => {
     }
 };
 
-//TODO: subjectName überprüfen ob unique. Ein User darf nicht zwei Subjects mit dem gleichem Namen haben.
 exports.createSubject = async (req, res, next) => {
     const {owner, subjectName, directories} = req.body;
     try {
         const newSubject = await new Subject({ owner, subjectName, directories }).save();
         return res.status(201).json({
-            message: `New subject ${subjectName} has been created!`,
+            message: `New subject ${subjectName} has been created`,
             data: newSubject
         });
     } catch (error) {
@@ -41,38 +40,49 @@ exports.createSubject = async (req, res, next) => {
     }
 };
 
-//Ein User kann nicht zwei Subjects mit dem gleichem Namen haben, da diese genutzt werden,
-//um nach dem Subjects eines Users zu filtern, dessen Directories geupdated werden sollen.
-exports.updateSubjectContent = async (req, res, next) => {
-    const updateSubject = req.body;
-    const filter = { owner: updateSubject.owner, subjectName: updateSubject.subjectName };
+//Kann auch genutzt werden, um (teilweise) Directories zu löschen oder Name eines Folder zu ändern
+exports.updateDirectories = async (req, res, next) => {
+    const subjectId = req.body.subjectId;
+    const updatedDirectories = req.body.directories;
     try {
-        //let, const. Warum gibt findOneAndUpdate den alten Wert zurück??
-        const updatedSubjectContent = await Subject.findOneAndUpdate(filter, updateSubject);
+        const updatedSubject = await Subject.findByIdAndUpdate(subjectId, { 
+            $set: { directories: updatedDirectories }  
+        }, { 
+            new: true 
+        });
         return res.status(200).json({
-            message: `Subject updated!`,
-            //data ist der alte Wert, warum?
-            data: updatedSubjectContent
+            message: `Directories of subject ${subjectId} have been updated`,
+            data: updatedSubject
         });
     } catch (error) {
         next(error);
     }
 };
-//Das Subject (model) speichert nur die ID des Owners, würde vllt mehr Sinn machen den Username auch zu speichern.
-exports.updateSubjectName = async (req, res, next) => {
-    const user = req.body.owner;
-    const oldName = req.body.oldName;
-    const newName = req.body.newName;
 
-    const update = { subjectName: newName };
-    const filter = { owner: user, subjectName: oldName };
+exports.updateSubjectName = async (req, res, next) => {
+    const subjectId = req.body.subjectId;
+    const updatedName = req.body.subjectName;
     try {
-        //let, const. Warum gibt findOneAndUpdate den alten Wert zurück??
-        let updatedSubjectName = await Subject.findOneAndUpdate(filter, update);
+        updatedSubject = await Subject.findByIdAndUpdate(subjectId, {
+            $set: { subjectName: updatedName }
+        }, {
+            new: true
+        });
         return res.status(200).json({
-            message: `Subject name updated!`,
-            //data ist der alte Wert, warum?
-            data: updatedSubjectName
+            message: `Name of subject ${subjectId} has been updated`,
+            data: updatedSubject
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+exports.deleteSubject = async (req, res, next) => {
+    const subjectId = req.body.subjectId;
+    try {
+        await Subject.findByIdAndDelete(subjectId);
+        return res.status(200).json({
+            message: `Subject ${subjectId} has been deleted`
         });
     } catch (error) {
         next(error);
