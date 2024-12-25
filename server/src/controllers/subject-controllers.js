@@ -14,13 +14,13 @@ exports.getSubjects = async (req, res, next) => {
     }
 };
 
-exports.getSubject = async (req, res, next) => {
+exports.getDirectories = async (req, res, next) => {
     const subjectId = req.body.subjectId;
     try {
         const subject = await Subject.findById(subjectId);
         return res.status(200).json({
             message: `Subject ${subjectId}`,
-            data: subject
+            data: subject.directories
         });
     } catch (error) {
         next(error);
