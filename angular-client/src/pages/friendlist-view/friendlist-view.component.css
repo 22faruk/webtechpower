@@ -1,0 +1,90 @@
+.container {
+  padding: 24px;
+  min-height: 85vh;
+}
+
+.grid-container {
+  max-width: 600px;
+  padding: 2rem;
+  border-radius: 6px;
+  border: 3px solid #d6d4d4;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.table-bordered {
+  border: 1px solid #ddd;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
+}
+
+.delete-button,
+.accept-button,
+.decline-button {
+  padding: 8px 16px;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover,
+.accept-button:hover,
+.decline-button:hover {
+  background-color: #0056b3;
+}
+
+nz-divider {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+h2[nz-typography] {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+p {
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+input[nz-input] {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+button[nz-button] {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+button[nz-button][nzType="primary"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+}
+
+button[nz-button][nzType="primary"]:hover {
+  background-color: #0056b3;
+}

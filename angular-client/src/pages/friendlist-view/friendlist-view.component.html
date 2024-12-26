@@ -1,0 +1,114 @@
+<nz-content>
+  <div class="container">
+    <div nz-row nzJustify="center">
+      <div nz-col nzSpan="24" class="grid-container">
+        <div nz-row nzJustify="center">
+          <h2 nz-typography>Friends</h2>
+        </div>
+        <div nz-row nzJustify="center">
+          <nz-divider></nz-divider>
+        </div>
+        <div nz-row nzJustify="center">
+          <div nz-col nzSpan="24">
+            <table class="table table-bordered table-striped">
+              <tbody>
+              <tr *ngFor="let user of friends">
+                <td>
+                  <a
+                    routerLink="/usersfriends"
+                    routerLinkActive="active"
+                    (click)="setFriendid(user._id)"
+                  >
+                    {{ user.username }}
+                  </a>
+                </td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                  <button
+                    nz-button
+                    nzType="default"
+                    class="delete-button"
+                    (click)="removeFriend(user._id)"
+                  >
+                    Remove
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div nz-row nzJustify="center">
+          <h2 nz-typography>Add Friend</h2>
+        </div>
+        <div nz-row nzJustify="center">
+          <p>Your ID: {{ userid }}</p>
+        </div>
+        <div nz-row nzJustify="center">
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-control [nzSpan]="24">
+                <input
+                  nz-input
+                  id="addFriend1"
+                  placeholder="Friend ID"
+                  maxlength="6"
+                  [(ngModel)]="friendid"
+                  #friendInput
+                  required
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="24">
+            <div nz-row nzJustify="center">
+              <button
+                nz-button
+                nzType="primary"
+                (click)="addFriend(friendid); friendInput.value = ''"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+        <div nz-row nzJustify="center">
+          <h2 nz-typography>Friend Requests</h2>
+        </div>
+        <div nz-row nzJustify="center">
+          <div nz-col nzSpan="24">
+            <table class="table table-bordered table-striped">
+              <tbody>
+              <tr *ngFor="let requestUser of friendRequests">
+                <td>{{ requestUser.senderId }}</td>
+                <td>
+                  <button
+                    nz-button
+                    nzType="default"
+                    class="accept-button"
+                    (click)="accept(requestUser.friendRequestId)"
+                  >
+                    Accept
+                  </button>
+                </td>
+                <td>
+                  <button
+                    nz-button
+                    nzType="default"
+                    class="decline-button"
+                    (click)="decline(requestUser.friendRequestId)"
+                  >
+                    Decline
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nz-content>
