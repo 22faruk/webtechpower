@@ -1,4 +1,4 @@
-const { body, validationResult } = require("express-validator");
+const { body, param, validationResult} = require("express-validator");
 
 exports.validateLogin = [
     body("username").notEmpty().withMessage("Username is required"),
@@ -25,10 +25,8 @@ exports.validateRegister = [
 ];
 
 exports.validateFlashcard = [
-    body('subjectId')
+    param('subjectId')
         .isMongoId().withMessage('subjectId muss eine gültige MongoDB-ID sein.'),
-    body('ownerId')
-        .isMongoId().withMessage('ownerId muss eine gültige MongoDB-ID sein.'),
     body('question')
         .isString().withMessage('Frage muss ein String sein.')
         .notEmpty().withMessage('Frage darf nicht leer sein.'),

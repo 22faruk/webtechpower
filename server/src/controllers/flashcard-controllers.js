@@ -2,11 +2,9 @@ const Flashcard = require("../models/flashcard-model");
 const User = require("../models/user-model");
 const Subject = require("../models/subject-model");
 
-/*
-TODO: 1. getAllSubjects (Rückgabe: [subjectnames]), 2. getAllDirectories ([
- */
 exports.updateFlashcard = async(req, res, next) => {
-    const {flashcardId, newQuestion, newAnswer} = req.body;
+    const flashcardId = req.params.flashcardId;
+    const { newQuestion, newAnswer} = req.body;
     try {
         const updatedFlashcard = await Flashcard.findByIdAndUpdate(
             flashcardId,
@@ -29,15 +27,18 @@ exports.updateFlashcard = async(req, res, next) => {
 }
 
 exports.createCard = async(req, res, next) => {
-    let {subjectId, ownerId, question, answer, folderName  } = req.body;
-    let owner = await User.findById(ownerId)
-    //console.log(owner.username);
+    const subjectId = req.params.subjectId;
+    const {question, answer, folderName  } = req.body;
+    let subject = await Subject.findById(subjectId);
     try {
-        const newFlashcard = await new Flashcard({owner, question, answer}).save(); //Middleware validiert Flashcard vorher
-        /*console.log("subjectid = " + subjectId)
-        console.log("flaschcardid =" + newFlashcard._id)*/
+        let subject = await Subject.findById(subjectId);
+        let owner = await User.findById(subject.owner);
+        if (!owner) { //TODO: Diese Abfrage irgendwie durch validation-middleware ausklammern??
+            return res.status(404).json({ error: 'Owner not found' });
+        }
 
-        const subject = await Subject.findByIdAndUpdate(
+        const newFlashcard = await new Flashcard({owner, question, answer}).save(); //Middleware validiert Flashcard vorher
+        subject = await Subject.findByIdAndUpdate(
             subjectId,
             {
                 $push: {"directories.$[dir].flashcards": newFlashcard._id}
@@ -47,20 +48,14 @@ exports.createCard = async(req, res, next) => {
                 new: true
             }
         )
-        /*console.log("vorhandene directories:", existingSubject.directories)
-        console.log("So soll es sein:" + existingSubject.directories[0].folderName)
-        console.log("So soll es sein:" + existingSubject.directories[0]._id);
-        console.log(subject.subjectName)*/
-
         let directory = subject.directories.find(dir => dir.folderName === folderName);
-        //console.log(directory.folderName)
         if (!directory) {
             directory = { folderName, flashcards: [] };
             subject.directories.push(directory);
         }
 
         return res.status(201).json({
-            message: `Neue Flashcard wurde dem Subject ${subject.subjectName}`,
+            message: `Neue Flashcard wurde dem Subject ${subject.subjectName} hinzugefügt`,
             data: subject
         })
     } catch (error) {
@@ -68,12 +63,13 @@ exports.createCard = async(req, res, next) => {
     }
 }
 
-/*exports.findFlashcardsOfUser = async(req, res, next) => {
-    const userId = req.params.id;
-    try {
-        const user = await User.findById(userId);
-
-    }
-
-}*/
-
+exports.test = async(req, res, next) => {
+    const subjectId = req.params.subjectId;
+    const subject = await Subject.findById(subjectId);
+    const owner = await User.findById(subject.owner);
+    console.log(subject.owner)
+    console.log()
+    return res.status(200).json({
+        data: subject.owner, owner
+    })
+}

@@ -5,7 +5,7 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 
 const todoRouter = require("./routes/todo-routes");
-const userRouter = require("./routes/user-route");
+const userRouter = require("./routes/user-routes");
 const subjectRouter = require("./routes/subject-routes");
 const flashcardRouter = require("./routes/flashcard-routes");
 const errorHandler = require("./middleware/error-handler-middleware");

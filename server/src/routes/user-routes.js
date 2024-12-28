@@ -5,9 +5,9 @@ const validator = require("../middleware/validator-middleware");
 
 const userRouter = express.Router();
 
-userRouter.post("/register", validator.validateRegister, userController.registerUser);
+userRouter.post("/", validator.validateRegister, userController.registerUser);
 
-userRouter.post("/login", validator.validateLogin, userController.loginUser);
+userRouter.post("/session", validator.validateLogin, userController.loginUser);
 
 userRouter.get("/test", authenticateToken, userController.testMethod);
 
