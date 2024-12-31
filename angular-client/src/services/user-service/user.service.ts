@@ -14,7 +14,7 @@ export class UserService {
   constructor(){}
 
   registerUser(username:string, name:string, email:string, password:string):Observable<UserResponse> {
-    return this.http.post<UserResponse>(`${environment.api}/users/register`,
+    return this.http.post<UserResponse>(`${environment.api}/users/`,
       {
         username,
         name,
@@ -24,7 +24,7 @@ export class UserService {
   }
 
   loginUser(username:string, password:string):Observable<LoginResponse>{
-    return this.http.post<LoginResponse>(`${environment.api}/users/login`,
+    return this.http.post<LoginResponse>(`${environment.api}/users/session`,
       {
         username,
         password,
