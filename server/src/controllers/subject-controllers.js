@@ -5,7 +5,11 @@ exports.getSubjects = async (req, res, next) => {
     const userId = req.user._id;
     //console.log(req.user._id);
     try {
-        const subjects = await Subject.find({ owner: userId });
+        const subjects = await Subject.find({ owner: userId })
+        .populate({
+            path: 'directories.flashcards',
+            select: 'question answer'
+        });
         return res.status(200).json({
             message: `List of subjects of user ${userId}`,
             data: subjects
