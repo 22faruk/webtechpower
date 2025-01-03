@@ -8,6 +8,7 @@ const todoRouter = require("./routes/todo-routes");
 const userRouter = require("./routes/user-routes");
 const subjectRouter = require("./routes/subject-routes");
 const flashcardRouter = require("./routes/flashcard-routes");
+const quizRouter = require("./routes/quiz-routes");
 const errorHandler = require("./middleware/error-handler-middleware");
 const connectDB = require("./database/connectDB");
 
@@ -35,6 +36,8 @@ app.use("/users", userRouter);
 app.use("/flashcard", flashcardRouter)
 
 app.use("/subjects", subjectRouter);
+
+app.use("/quiz", quizRouter);
 
 app.use(errorHandler);
 
