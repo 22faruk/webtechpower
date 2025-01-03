@@ -34,8 +34,7 @@ app.use("/users", userRouter);
 
 app.use("/flashcard", flashcardRouter)
 
-//code guidelines plural verwenden
-app.use("/subject", subjectRouter);
+app.use("/subjects", subjectRouter);
 
 app.use(errorHandler);
 
