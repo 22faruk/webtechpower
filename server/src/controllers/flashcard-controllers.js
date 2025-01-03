@@ -4,7 +4,7 @@ const Subject = require("../models/subject-model");
 
 exports.updateFlashcard = async(req, res, next) => {
     const flashcardId = req.params.flashcardId;
-    const { newQuestion, newAnswer} = req.body;
+    const {newQuestion, newAnswer} = req.body;
     try {
         const updatedFlashcard = await Flashcard.findByIdAndUpdate(
             flashcardId,

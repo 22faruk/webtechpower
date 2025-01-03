@@ -2,7 +2,7 @@ const { default: mongoose } = require("mongoose");
 const Subject = require("../models/subject-model");
 
 exports.getSubjects = async (req, res, next) => {
-    const userId = req.body.userId;
+    const userId = req.user._id
     try {
         const subjects = await Subject.find({ owner: userId });
         return res.status(200).json({

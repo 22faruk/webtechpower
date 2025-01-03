@@ -39,7 +39,7 @@ exports.loginUser = async (req, res, next) => {
 
                 return res.status(200).json({
                     message: 'Login succesful',
-                    data: token,
+                    data: token
                 })
             }
         }
@@ -51,6 +51,7 @@ exports.loginUser = async (req, res, next) => {
 
 exports.testMethod = async (req, res, next) => {
     try {
+        console.log(req.user._id);
         return res.status(200).json({
             message: 'Test erfolgreich'
         })

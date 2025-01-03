@@ -5,7 +5,7 @@ const validator = require("../middleware/validator-middleware")
 
 const flashcardRouter = express.Router();
 //TODO: Create muss noch überarbeitet werden!
-flashcardRouter.post("/:subjectId/create", requestLogger, validator.validateFlashcard, flashcardController.createCard);
+flashcardRouter.post("/:subjectId/:folderName/create", requestLogger, validator.validateFlashcard, flashcardController.createCard);
 
 flashcardRouter.patch("/:flashcardId/update", requestLogger, flashcardController.updateFlashcard)
 
