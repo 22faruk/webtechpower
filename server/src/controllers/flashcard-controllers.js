@@ -63,6 +63,18 @@ exports.createCard = async(req, res, next) => {
     }
 }
 
+exports.deleteFlashcard = async(req, res, next) => {
+    const flashcardId = req.params.flashcardId;
+    await Flashcard.findByIdAndDelete(flashcardId);
+    await Subject.updateMany(
+        {"directories.flashcards": flashcardId},
+        {$pull: { "directories.$[].flashcards": flashcardId }})
+    return res.status(200).json({
+        message: "Flashcard wurde entfernt"
+    })
+
+}
+
 exports.test = async(req, res, next) => {
     const subjectId = req.params.subjectId;
     const subject = await Subject.findById(subjectId);

@@ -9,6 +9,8 @@ flashcardRouter.post("/:subjectId/:folderName/create", requestLogger, validator.
 
 flashcardRouter.patch("/:flashcardId/update", requestLogger, flashcardController.updateFlashcard)
 
+flashcardRouter.delete("/:flashcardId", flashcardController.deleteFlashcard)
+
 flashcardRouter.get("/:subjectId", flashcardController.test);
 
 module.exports = flashcardRouter;
