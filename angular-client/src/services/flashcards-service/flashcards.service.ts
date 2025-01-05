@@ -27,4 +27,7 @@ export class FlashcardsService {
       }
     )
   }
+  deleteFlashcard(flashcardId: string){
+    return this.http.delete(`${environment.api}/flashcard/${flashcardId}`)
+  }
 }

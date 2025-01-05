@@ -106,7 +106,7 @@
           <button nz-button nzType="primary" (click)="toggleFlashcardView(false)">Single View</button>
           <button nz-button nzType="primary" (click)="toggleFlashcardView(true)">Multi View</button>
           <button nz-button nzType="primary" *ngIf="currentFlashcard" (click)="openUpdateFlashcard()">Change</button>
-          <button nz-button nzType="primary" *ngIf="currentFlashcard" >Delete</button>
+          <button nz-button nzType="primary" *ngIf="currentFlashcard" (click)="deleteFlashcard()">Delete</button>
         </div>
         <div class="popup-overlay" *ngIf="openFlashcardUpdate">
           <div class="popup">

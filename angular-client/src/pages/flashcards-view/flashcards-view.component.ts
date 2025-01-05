@@ -242,12 +242,22 @@ export class FlashcardsViewComponent implements OnInit{
       const oldAnswer: string= this.currentFlashcard.answer;
       const oldQuestion: string = this.currentFlashcard.question;
       if (answer == "right") {
-        const newCount = this.currentFlashcard.rightCount++;
+        const newCount = this.currentFlashcard.count++;
         this.updateFlashcard(oldQuestion,oldAnswer)
       } else {
         const newCount = 0;
         this.updateFlashcard(oldQuestion,oldAnswer);
       }
+    }
+  }
+  deleteFlashcard(){
+    if (this.currentFlashcard) {
+      const flashcardId: string = this.currentFlashcard._id
+      this.flashcardService.deleteFlashcard(flashcardId).subscribe({next:()=>{
+          console.log(`flashcard: ${flashcardId} deleted`)
+        }})
+      this.currentFlashcard = null;
+      window.location.reload();
     }
   }
 }
