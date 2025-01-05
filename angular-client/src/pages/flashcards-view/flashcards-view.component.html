@@ -1,0 +1,155 @@
+<nz-content>
+  <div class="container">
+    <div nz-row class="main-layout">
+      <!-- Sidebar for Subjects -->
+      <div nz-col nzSpan="3" class="sidebar">
+        <h2 nz-typography>Subjects</h2>
+        <button nz-button nzType="dashed" class="add-button" (click)="openAddSubjectModal()">Add Subject</button>
+
+        <div class="popup-overlay" *ngIf="showAddSubjectModal">
+          <div class="popup">
+            <h3>Add New Item</h3>
+            <input #subjectName type="text" nz-input placeholder="Enter name" />
+            <div class="popup-buttons">
+              <button nz-button nzType="primary" (click)="confirmAddSubject(subjectName.value)">Confirm</button>
+              <button nz-button nzType="default" (click)="closePopup()">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <nz-divider></nz-divider>
+        <ul>
+          <li *ngFor="let subject of subjects" (click)="selectSubject(subject)" [class.active]="subject === currentSubject">
+            {{ subject.subjectName }}
+          </li>
+        </ul>
+        <nz-divider *ngIf="currentSubject"></nz-divider>
+        <div *ngIf="currentSubject && !showChangeSubjectModal" class="selected-actions">
+          <button nz-button nzType="default" (click)="deleteSubject()">Delete</button>
+          <button nz-button nzType="primary" (click)="showSubjectChangeModal()">Change</button>
+        </div>
+
+        <div class="popup-overlay" *ngIf="currentSubject && showChangeSubjectModal">
+          <div class="popup">
+            <h3>Rename Subject</h3>
+            <input #newSubjectName type="text" nz-input placeholder="Enter new name" />
+            <div class="popup-buttons">
+              <button nz-button nzType="primary" (click)="changeSubjectOrFolder(newSubjectName.value,[])">Confirm</button>
+              <button nz-button nzType="default" (click)="closePopup()">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar for Folders -->
+      <div nz-col nzSpan="4" class="folder-sidebar">
+        <h2 nz-typography>Folders</h2>
+        <button nz-button nzType="dashed" class="add-button" (click)="openAddFolderModal()">Add Folder</button>
+
+        <div class="popup-overlay" *ngIf="showAddFolderModal">
+          <div class="popup">
+            <h3>Add New Item</h3>
+            <input #folderName type="text" nz-input placeholder="Enter name" />
+            <div class="popup-buttons">
+              <button nz-button nzType="primary" (click)="confirmAddFolder(folderName.value)">Confirm</button>
+              <button nz-button nzType="default" (click)="closePopup()">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <nz-divider></nz-divider>
+        <ul>
+          <div *ngIf="currentSubject">
+            <li *ngFor="let folder of currentSubject.directories" (click)="selectFolder(folder)" [class.active]="folder === currentFolder">
+              {{ folder.folderName }}
+            </li>
+          </div>
+        </ul>
+
+        <nz-divider *ngIf="currentFolder"></nz-divider>
+        <div *ngIf="currentFolder && !showChangeFolderModal" class="selected-actions">
+          <button nz-button nzType="default" (click)="deleteFolder()">Delete</button>
+          <button nz-button nzType="primary" (click)="showFolderChangeModal()">Change</button>
+        </div>
+
+        <div class="popup-overlay" *ngIf="currentFolder && showChangeFolderModal">
+          <div class="popup">
+            <h3>Rename Folder</h3>
+            <input #newFolderName type="text" nz-input placeholder="Enter new name" />
+            <div class="popup-buttons">
+              <button nz-button nzType="primary" (click)="changeFolder(newFolderName.value)">Confirm</button>
+              <button nz-button nzType="default" (click)="closePopup()">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Flashcards Section -->
+      <div nz-col nzSpan="17" class="flashcard-section">
+        <h2 *ngIf="currentFolder" nz-typography>{{ currentFolder.folderName }}</h2>
+        <button nz-button nzType="dashed" class="add-button" (click)="openAddFlashcardModal()">Add Flashcard</button>
+
+        <div class="popup-overlay" *ngIf="showAddFlashcardModal">
+          <div class="popup">
+            <h3>Add New Flashcard</h3>
+            <input #flashcardQuestion type="text" nz-input placeholder="Enter Question" />
+            <input #flashcardAnswer type="text" nz-input placeholder="Enter Answer" />
+            <div class="popup-buttons">
+              <button nz-button nzType="primary" (click)="confirmAddFlashcard(flashcardQuestion.value,flashcardAnswer.value)">Confirm</button>
+              <button nz-button nzType="default" (click)="closePopup()">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="sorting-buttons">
+          <button nz-button nzType="primary" (click)="toggleFlashcardView(false)">Single View</button>
+          <button nz-button nzType="primary" (click)="toggleFlashcardView(true)">Multi View</button>
+          <button nz-button nzType="primary" *ngIf="currentFlashcard" (click)="openUpdateFlashcard()">Change</button>
+          <button nz-button nzType="primary" *ngIf="currentFlashcard" >Delete</button>
+        </div>
+        <div class="popup-overlay" *ngIf="openFlashcardUpdate">
+          <div class="popup">
+            <h3>Update Flashcard</h3>
+            <input #newFlashcardQuestion type="text" nz-input placeholder="Enter new Question" />
+            <input #newFlashcardAnswer type="text" nz-input placeholder="Enter new Answer" />
+            <div class="popup-buttons">
+              <button nz-button nzType="primary" (click)="updateFlashcard(newFlashcardQuestion.value,newFlashcardAnswer.value)">Confirm</button>
+              <button nz-button nzType="default" (click)="closePopup()">Cancel</button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="currentFolder && flashcardViewMulti" class="flashcards">
+          <div *ngFor="let card of currentFolder.flashcards" (click)="selectFlashcard(card)" class="flashcard" [class.selected]="card == currentFlashcard">
+            <h3>{{ card.question }}</h3>
+            <p *ngIf="card.showAnswer">{{ card.answer }}</p>
+            <div *ngIf="card.showAnswer">
+              <button nz-button nzType="link" (click)="rightOrWrong('right')">Right</button>
+              <button nz-button nzType="link" (click)="rightOrWrong('wrong')">Wrong</button>
+            </div>
+            <button nz-button nzType="link" *ngIf="!card.showAnswer" (click)="toggleShowAnswer(card)">Show Answer</button>
+            <button nz-button nzType="link" *ngIf="card.showAnswer" (click)="toggleShowAnswer(card)">Hide Answer</button>
+          </div>
+        </div>
+        <div *ngIf="currentFolder && !flashcardViewMulti" class="flashcard-single">
+          <div class="flashcard-large" [class.selected]="currentFolder.flashcards[currentFlashcardIndex] == currentFlashcard" (click)="selectFlashcard(currentFolder.flashcards[currentFlashcardIndex])">
+            <div *ngIf="currentFolder?.flashcards?.[currentFlashcardIndex] as currentFlashcard">
+              <h3>{{ currentFlashcard.question }}</h3>
+              <p *ngIf="currentFolder.flashcards[currentFlashcardIndex].showAnswer">{{ currentFlashcard.answer }}</p>
+            </div>
+            <div *ngIf="currentFolder.flashcards[currentFlashcardIndex].showAnswer">
+              <button nz-button nzType="link" (click)="rightOrWrong('right')">Right</button>
+              <button nz-button nzType="link" (click)="rightOrWrong('wrong')">Wrong</button>
+            </div>
+            <button nz-button nzType="link" *ngIf="!currentFolder.flashcards[currentFlashcardIndex].showAnswer" (click)="toggleShowAnswer(currentFolder.flashcards[currentFlashcardIndex])">Show Answer</button>
+            <button nz-button nzType="link"  *ngIf="currentFolder.flashcards[currentFlashcardIndex].showAnswer" (click)="toggleShowAnswer(currentFolder.flashcards[currentFlashcardIndex])">Hide Answer</button>
+          </div>
+          <div class="navigation-buttons">
+            <button nz-button nzType="default" (click)="goToPrevious()" [disabled]="currentFlashcardIndex === 0">Previous</button>
+            <button nz-button nzType="default" (click)="goToNext()" [disabled]="currentFlashcardIndex === maxLength">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nz-content>
