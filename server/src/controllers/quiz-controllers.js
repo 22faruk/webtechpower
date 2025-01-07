@@ -74,15 +74,28 @@ exports.nextQuestion = async(req,res,next) => {
         if(!quiz) throw new Error(`User with id: ${userId} has no quiz!`);
         
         flashcards = quiz.flashcards;
-        if(0==flashcards.length) throw new Error(`Quiz of user with id: ${userId} has no questions left!`);
-        const randomIndex = randomNumber(0,flashcards.length);
-        flashcard = flashcards[randomIndex];
-        flashcards.splice(randomIndex,1);
+        const num_answers=4;
+        const questionAnswers={question:"", answers:[]};
+
+        for(let i=0;i<num_answers && flashcards.length>0;++i)
+        {
+            const randomIndex = randomNumber(0,flashcards.length);
+            flashcard = flashcards[randomIndex];
+            flashcards.splice(randomIndex,1);
+
+            if(0==i)
+            {
+                questionAnswers.question=flashcard.question;
+            }
+
+            questionAnswers.answers.push(flashcard.answer);
+        }
+
         await quiz.save();
     
         return res.status(200).json({
             message: `Successfully fetched next question!`,
-            data: flashcard
+            data: questionAnswers
         });
     }
     
