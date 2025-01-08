@@ -73,7 +73,7 @@ exports.nextQuestion = async(req,res,next) => {
         const quiz = await Quiz.findOne({owner: userId}).populate({path: 'flashcards', select: 'question answer'});
         if(!quiz) throw new Error(`User with id: ${userId} has no quiz!`);
         
-        flashcards = quiz.flashcards;
+        flashcards = quiz.flashcards.slice();
         const num_answers=4;
         const questionAnswers={question:"", answers:[]};
 
@@ -85,6 +85,7 @@ exports.nextQuestion = async(req,res,next) => {
 
             if(0==i)
             {
+                quiz.flashcards.splice(randomIndex,1);
                 questionAnswers.question=flashcard.question;
             }
 
