@@ -1,6 +1,7 @@
 const Quiz = require("../models/quiz-model");
 const Subject = require("../models/subject-model");
 const User = require("../models/user-model")
+const Flashcard = require("../models/flashcard-model");
 
 //generates a random integer between [from,to)
 function randomNumber(from, to)
@@ -75,7 +76,7 @@ exports.nextQuestion = async(req,res,next) => {
         
         flashcards = quiz.flashcards.slice();
         const num_answers=4;
-        const questionAnswers={question:"", answers:[]};
+        const questionAnswers={question:"", questionId:null, answers:[]};
 
         for(let i=0;i<num_answers && flashcards.length>0;++i)
         {
@@ -85,8 +86,9 @@ exports.nextQuestion = async(req,res,next) => {
 
             if(0==i)
             {
-                quiz.flashcards.splice(randomIndex,1);
+                //quiz.flashcards.splice(randomIndex,1);
                 questionAnswers.question=flashcard.question;
+                questionAnswers.questionId=flashcard._id;
             }
 
             questionAnswers.answers.push(flashcard.answer);
@@ -118,6 +120,29 @@ exports.numRemainingQuestions = async(req,res,next) => {
         return res.status(200).json({
             data: quiz.flashcards.length
         })
+    }
+
+    catch(err) {
+        next(err);
+    }
+}
+
+exports.validateQuestion = async(req,res,next) => {
+    try {
+        const questionId = req.params.questionId;
+        const flashcard = await Flashcard.findById(questionId);
+        if(!flashcard) throw new Error(`Question with id: ${questionId} not found!`);
+
+        const answer = req.body.answer;
+        if(!answer) throw new Error("No answer provided!");
+
+        const isCorrect = (answer == flashcard.answer);
+        flashcard.count = (isCorrect ? flashcard.count + 1 : 0);
+        flashcard.save();
+
+        return res.status(200).json({
+            data: {isCorrect: isCorrect}
+        });
     }
 
     catch(err) {
