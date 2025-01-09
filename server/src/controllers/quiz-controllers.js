@@ -86,7 +86,7 @@ exports.nextQuestion = async(req,res,next) => {
 
             if(0==i)
             {
-                //quiz.flashcards.splice(randomIndex,1);
+                quiz.flashcards.splice(randomIndex,1);
                 questionAnswers.question=flashcard.question;
                 questionAnswers.questionId=flashcard._id;
             }
