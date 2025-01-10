@@ -8,6 +8,8 @@ const userSchema = new Schema({
     password: {type: String, required: true},
     email: {type: String, required: true},
     createdAt: {type: Date, default: Date.now() },
-})
+    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    friendRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+});
 
 module.exports = mongoose.model("User", userSchema);

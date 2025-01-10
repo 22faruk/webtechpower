@@ -11,4 +11,12 @@ userRouter.post("/session", validator.validateLogin, userController.loginUser);
 
 userRouter.get("/test", authenticateToken, userController.testMethod);
 
+userRouter.get("/:userId", authenticateToken, userController.getUser);
+
+userRouter.patch("/friendRequest", authenticateToken, userController.sendFriendRequest);
+
+userRouter.patch("/accept", authenticateToken, userController.acceptFriendRequest);
+
+userRouter.patch("/decline", authenticateToken, userController.declineFriendRequest);
+
 module.exports = userRouter;
