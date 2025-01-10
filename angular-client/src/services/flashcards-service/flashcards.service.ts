@@ -11,11 +11,10 @@ export class FlashcardsService {
   constructor() { }
 
   createFlashcard(subjectId: string, question: string, answer: string, folderName: string){
-    return this.http.post(`${environment.api}/flashcard/${subjectId}/create`,
+    return this.http.post(`${environment.api}/flashcard/${subjectId}/${folderName}/create`,
       {
         question,
-        answer,
-        folderName
+        answer
       }
       )
   }

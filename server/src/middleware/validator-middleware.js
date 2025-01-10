@@ -27,15 +27,15 @@ exports.validateRegister = [
 exports.validateFlashcard = [
     param('subjectId')
         .isMongoId().withMessage('subjectId muss eine gültige MongoDB-ID sein.'),
+    param('folderName')
+        .isString().withMessage('FolderName muss ein String sein.')
+        .notEmpty().withMessage('FolderName darf nicht leer sein.'),
     body('question')
         .isString().withMessage('Frage muss ein String sein.')
         .notEmpty().withMessage('Frage darf nicht leer sein.'),
     body('answer')
         .isString().withMessage('Antwort muss ein String sein.')
         .notEmpty().withMessage('Antwort darf nicht leer sein.'),
-    body('folderName')
-        .isString().withMessage('FolderName muss ein String sein.')
-        .notEmpty().withMessage('FolderName darf nicht leer sein.'),
 
     (req, res, next) => {
         const errors = validationResult(req);

@@ -27,9 +27,8 @@ exports.updateFlashcard = async(req, res, next) => {
 }
 
 exports.createCard = async(req, res, next) => {
-    const subjectId = req.params.subjectId;
-    const {question, answer, folderName  } = req.body;
-    let subject = await Subject.findById(subjectId);
+    const {subjectId, folderName }= req.params;
+    const {question, answer} = req.body;
     try {
         let subject = await Subject.findById(subjectId);
         let owner = await User.findById(subject.owner);
