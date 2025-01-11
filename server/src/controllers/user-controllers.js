@@ -64,9 +64,18 @@ exports.testMethod = async (req, res, next) => {
 
 exports.getUser = async (req, res, next) => {
     const userId = req.params.userId;
+    if(userId !== req.user._id){
+        return res.status(401).json({ message: `Unauthorized request` });
+    }
     try {
         const user = await User.findById(userId).populate("friendRequests", "username");
-        return res.status(200).json({ message: `here`, data: user });
+        if(!user){
+            return res.status(404).json({ 
+                message: `User with id ${userId} not found`
+             });
+        } else {
+            return res.status(200).json({ data: user });
+        }
     } catch (error) {
         next(error);
     }
@@ -75,12 +84,31 @@ exports.getUser = async (req, res, next) => {
 exports.sendFriendRequest = async (req, res, next) => {
     const userId = req.user._id;
     const receiverId = req.body.receiverId;
+    if(userId == receiverId){
+        return res.status(400).json({ message: `Cannot send friendrequest to yourself` });
+    }
     try {
         const user = await User.findById(userId);
         const receiver = await User.findById(receiverId);
-        receiver.friendRequests.push(userId);
-        await receiver.save();
-        return res.status(200).json({ message: `Added` });
+        if(!receiver){
+            return res.status(404).json({ message: `Receiver not found` });
+        } else if(user.friendRequests.includes(receiverId)){
+            receiver.friends.push(userId);
+            await receiver.save();
+            user.friends.push(receiverId);
+            user.friendRequests = user.friendRequests.filter(_id => _id.toString() !== receiverId);
+            await user.save();
+            return res.status(200).json({
+                message: `Friendrequest already in User's list accepted`,
+                data: user
+            });
+        } else if(receiver.friendRequests.includes(userId)||receiver.friends.includes(userId)){ 
+            return res.status(400).json({ message: `Already friends/Friendrequest already sent` });
+        } else {
+            receiver.friendRequests.push(userId);
+            await receiver.save();
+            return res.status(200).json({ message: `Friendrequest sent` });
+        }
     } catch (error) {
         next(error);
     }
@@ -91,10 +119,13 @@ exports.acceptFriendRequest = async (req, res, next) => {
     const acceptedId = req.body.acceptedId;
     try {
         const user = await User.findById(userId);
+        const acceptedUser = await User.findById(acceptedId);
+        acceptedUser.friends.push(userId);
+        await acceptedUser.save();
         user.friends.push(acceptedId);
         user.friendRequests = user.friendRequests.filter(_id => _id.toString() !== acceptedId);
         await user.save();
-        return res.status(200).json({ message: `ok` });
+        return res.status(200).json({ message: `Friendrequest accepted`, data: user });
     } catch (error) {
         next(error);
     }
@@ -107,7 +138,24 @@ exports.declineFriendRequest = async(req, res, next) => {
         const user = await User.findById(userId);
         user.friendRequests = user.friendRequests.filter(_id => _id.toString() !== declinedId);
         await user.save();
-        return res.status(200).json({ message: `ok` });
+        return res.status(200).json({ message: `Friendrequest declined`, data: user });
+    } catch (error) {
+        next(error);
+    }
+};
+
+exports.removeFriend = async(req, res, next) => {
+    const userId = req.user._id;
+    const removedId = req.body.removedId;
+    try {
+        const user = await User.findById(userId);
+        const removedFriend = await User.findById(removedId);
+        console.log(removedFriend._id);
+        user.friends = user.friends.filter(_id => _id.toString() !== removedId);
+        await user.save();
+        removedFriend.friends = removedFriend.friends.filter(_id => _id.toString() !== userId);
+        await removedFriend.save();
+        return res.status(200).json({ message: `Friend removed`, data: user });
     } catch (error) {
         next(error);
     }

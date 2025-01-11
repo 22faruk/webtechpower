@@ -19,4 +19,6 @@ userRouter.patch("/accept", authenticateToken, userController.acceptFriendReques
 
 userRouter.patch("/decline", authenticateToken, userController.declineFriendRequest);
 
+userRouter.patch("/remove", authenticateToken, userController.removeFriend);
+
 module.exports = userRouter;
