@@ -5,9 +5,9 @@ const validator = require("../middleware/validator-middleware")
 const authenticateToken = require("../middleware/jwt-authentication-middleware");
 
 const quizRouter = express.Router();
-quizRouter.post("/:subjectId/:directoryId?", requestLogger, quizController.createQuiz);
-quizRouter.get("/", requestLogger, quizController.nextQuestion);
-quizRouter.get("/numRemainingQuestions", requestLogger, quizController.numRemainingQuestions);
-quizRouter.get("/validate/:questionId", requestLogger, quizController.validateQuestion);
+quizRouter.post("/:subjectId/:directoryId?", requestLogger, authenticateToken, quizController.createQuiz);
+quizRouter.get("/", requestLogger, authenticateToken, quizController.nextQuestion);
+quizRouter.get("/numRemainingQuestions", requestLogger, authenticateToken, quizController.numRemainingQuestions);
+quizRouter.get("/validate/:questionId", requestLogger, authenticateToken, quizController.validateQuestion);
 
 module.exports = quizRouter;
