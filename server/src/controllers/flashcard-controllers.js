@@ -4,14 +4,20 @@ const Subject = require("../models/subject-model");
 
 exports.updateFlashcard = async(req, res, next) => {
     const flashcardId = req.params.flashcardId;
-    const {newQuestion, newAnswer} = req.body;
+    const {newQuestion, newAnswer, count} = req.body;
     try {
+        const updateFields = {
+            question: newQuestion,
+            answer: newAnswer,
+        }
+
+        if(count !== null && count !== undefined) {
+            updateFields.count = count;
+        }
+
         const updatedFlashcard = await Flashcard.findByIdAndUpdate(
             flashcardId,
-            {
-                question: newQuestion,
-                answer: newAnswer
-            },
+            updateFields,
             {
                 new: true
             }
