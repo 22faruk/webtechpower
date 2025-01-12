@@ -24,7 +24,7 @@
           </li>
         </ul>
         <nz-divider *ngIf="currentSubject"></nz-divider>
-        <div *ngIf="currentSubject && !showChangeSubjectModal" class="selected-actions">
+        <div *ngIf="currentSubject && !showChangeSubjectModal && showButtonsSubject" class="selected-actions">
           <button nz-button nzType="default" (click)="deleteSubject()">Delete</button>
           <button nz-button nzType="primary" (click)="showSubjectChangeModal()">Change</button>
         </div>
@@ -67,7 +67,7 @@
         </ul>
 
         <nz-divider *ngIf="currentFolder"></nz-divider>
-        <div *ngIf="currentFolder && !showChangeFolderModal" class="selected-actions">
+        <div *ngIf="currentFolder && !showChangeFolderModal && showButtonsFolder" class="selected-actions">
           <button nz-button nzType="default" (click)="deleteFolder()">Delete</button>
           <button nz-button nzType="primary" (click)="showFolderChangeModal()">Change</button>
         </div>

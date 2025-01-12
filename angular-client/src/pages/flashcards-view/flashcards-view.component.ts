@@ -36,7 +36,7 @@ export class FlashcardsViewComponent implements OnInit{
   userId!: string;
   subjects!: ISubject[];
   currentSubject!: ISubject| null;
-  currentFolder!: IDirectory;
+  currentFolder!: IDirectory| null;
   currentFlashcard !: IFlashcard|null;
   seeAnswer: boolean = false;
   showAddSubjectModal: boolean= false;
@@ -49,6 +49,8 @@ export class FlashcardsViewComponent implements OnInit{
   maxLength : number = 0;
   openFlashcardUpdate: boolean = false;
   isAscending: boolean = true;
+  showButtonsSubject: boolean = true;
+  showButtonsFolder: boolean = true;
 
   flashcardService = inject(FlashcardsService)
   subjectService = inject(SubjectService)
@@ -71,11 +73,23 @@ export class FlashcardsViewComponent implements OnInit{
   }
 
   selectSubject(subject: ISubject){
-    this.currentSubject = subject;
+    if (this.currentSubject == subject){
+      this.showButtonsSubject = !this.showButtonsSubject;
+    }
+    else {
+      this.showButtonsSubject = true;
+      this.currentSubject = subject;
+    }
   }
   selectFolder(folderName: IDirectory){
-    this.currentFolder = folderName;
-    this.maxLength = this.currentFolder.flashcards.length-1;
+    if (this.currentFolder == folderName){
+      this.showButtonsFolder = !this.showButtonsFolder;
+    }
+    else {
+      this.showButtonsFolder = true;
+      this.currentFolder = folderName;
+      this.maxLength = this.currentFolder.flashcards.length - 1;
+    }
   }
 
   updateFlashcard(newQuestion: string, newAnswer: string, card: IFlashcard|null) {
@@ -84,6 +98,11 @@ export class FlashcardsViewComponent implements OnInit{
       this.flashcardService.updateFlashcard(flashcardId, newQuestion, newAnswer, card.count)
         .subscribe({
           next: () => {
+            if (this.currentFlashcard) {
+              this.currentFlashcard.question = newQuestion;
+              this.currentFlashcard.answer = newAnswer;
+              this.currentFlashcard.count = card.count;
+            }
             console.log("flashcard updated")
           }
         })
@@ -94,18 +113,21 @@ export class FlashcardsViewComponent implements OnInit{
     if (this.currentSubject){
     const subjectId: string = this.currentSubject._id;
     this.subjectService.deleteSubject(subjectId).subscribe({next:()=>{
+        this.subjects = this.subjects.filter(subject => subject._id !== subjectId);
         console.log("subject deleted")
       }})
     this.currentSubject = null;
-    window.location.reload();
+    this.currentFolder = null;
+    this.currentFlashcard = null;
     }
   }
   deleteFolder(){
-    if(this.currentSubject) {
+    if(this.currentSubject && this.currentFolder) {
       const folderName: string = this.currentFolder.folderName;
-      const newDirectories: IDirectory[] = this.currentSubject?.directories.filter(
+      this.currentSubject.directories = this.currentSubject?.directories.filter(
         (directory) => directory.folderName !== folderName) || [];
-      this.changeSubjectOrFolder("",newDirectories);
+      this.changeSubjectOrFolder("",this.currentSubject.directories);
+      this.currentFolder = null;
     }
   }
 
@@ -118,12 +140,14 @@ export class FlashcardsViewComponent implements OnInit{
   //   }})
   // }
   toggleShowAnswer(card: IFlashcard){
+    if (this.currentFolder){
     this.currentFolder.flashcards = this.currentFolder.flashcards.map((flashcard) =>{
       if (flashcard == card){
         return {... flashcard, showAnswer: !flashcard.showAnswer}
       }
       return flashcard
     })
+    }
   }
   openAddSubjectModal(){
     this.showAddSubjectModal = true;
@@ -146,11 +170,11 @@ export class FlashcardsViewComponent implements OnInit{
       const newDirectories: IDirectory[] = [...this.currentSubject.directories,{ folderName: newFolderName, flashcards: [] }];
       this.subjectService.updateSubject(this.currentSubject._id, "",newDirectories).subscribe({
         next: () =>{
+          this.currentSubject?.directories.push({folderName: newFolderName, flashcards: []})
           console.log("New Folder added")
         }
       })
       this.showAddFolderModal = false;
-      window.location.reload();
     }
     else{
       console.log("No Subject for Folder selected")
@@ -165,7 +189,7 @@ export class FlashcardsViewComponent implements OnInit{
         }
       })
       this.showAddFlashcardModal = false;
-      //window.location.reload();
+      window.location.reload();
     }
     else {
       console.log("No Folder for the flashcard selected")
@@ -177,12 +201,14 @@ export class FlashcardsViewComponent implements OnInit{
       const subjectId: string = this.currentSubject._id
       this.subjectService.updateSubject(subjectId, subjectName, directory).subscribe({
         next: () => {
+          if (subjectName != "" && this.currentSubject) {
+            this.currentSubject.subjectName = subjectName;
+          }
           console.log("Subject or Folder successfully changed")
         }
       })
       this.showChangeSubjectModal = false;
       this.showChangeFolderModal = false;
-      window.location.reload();
     }
   }
 
@@ -192,6 +218,7 @@ export class FlashcardsViewComponent implements OnInit{
     this.showAddFlashcardModal = false;
     this.showChangeSubjectModal = false;
     this.showChangeFolderModal = false;
+    this.openFlashcardUpdate = false;
   }
 
   showSubjectChangeModal(){
@@ -201,15 +228,15 @@ export class FlashcardsViewComponent implements OnInit{
     this.showChangeFolderModal = true;
   }
   changeFolder(newFolderName: string){
-    if (this.currentSubject) {
+    if (this.currentSubject && this.currentFolder) {
       const folderName: string = this.currentFolder.folderName;
-      const newDirectory: IDirectory[] = this.currentSubject?.directories.map((directory) => {
+      this.currentSubject.directories = this.currentSubject?.directories.map((directory) => {
         if (directory.folderName === folderName) {
           return { ...directory, folderName: newFolderName };
         }
         return directory;
       }) || [];
-      this.changeSubjectOrFolder("",newDirectory);
+      this.changeSubjectOrFolder("",this.currentSubject.directories);
     }
   }
   toggleFlashcardView(multiOrSingle: boolean){
@@ -226,9 +253,11 @@ export class FlashcardsViewComponent implements OnInit{
   }
 
   goToNext() {
-    if (this.currentFlashcardIndex < this.currentFolder.flashcards.length - 1) {
-      this.currentFlashcardIndex++;
-      this.currentFlashcard = null;
+    if (this.currentFolder) {
+      if (this.currentFlashcardIndex < this.currentFolder.flashcards.length - 1) {
+        this.currentFlashcardIndex++;
+        this.currentFlashcard = null;
+      }
     }
   }
   selectFlashcard(card: IFlashcard){
@@ -258,10 +287,12 @@ export class FlashcardsViewComponent implements OnInit{
     if (this.currentFlashcard) {
       const flashcardId: string = this.currentFlashcard._id
       this.flashcardService.deleteFlashcard(flashcardId).subscribe({next:()=>{
+        if (this.currentFolder) {
+          this.currentFolder.flashcards = this.currentFolder?.flashcards.filter(card => card._id !== flashcardId);
+        }
           console.log(`flashcard: ${flashcardId} deleted`)
         }})
       this.currentFlashcard = null;
-      window.location.reload();
     }
   }
   sortFlashcards(){
