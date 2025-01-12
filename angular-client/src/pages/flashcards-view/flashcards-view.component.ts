@@ -163,7 +163,7 @@ export class FlashcardsViewComponent implements OnInit{
         }
       })
       this.showAddFlashcardModal = false;
-      window.location.reload();
+      //window.location.reload();
     }
     else {
       console.log("No Folder for the flashcard selected")

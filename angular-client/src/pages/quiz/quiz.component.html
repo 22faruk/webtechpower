@@ -1,0 +1,29 @@
+<nz-content>
+  <div class="container">
+    <div nz-row nzJustify="center">
+      <div nz-col nzSpan="24" class="grid-container">
+        <div nz-row nzJustify="center">
+          <h1 nz-typography>Quiz Time!</h1>
+        </div>
+        <div nz-row nzJustify="center">
+          <nz-divider />
+        </div>
+        <div nz-row [nzGutter]="[16, 16]">
+          <div nz-col nzSpan="24">
+            <p nz-typography>{{ question.question }}</p>
+            <div nz-row nzJustify="start">
+              <div nz-col nzSpan="24" *ngFor="let answer of question.answers">
+                <button nz-button nzType="default" class="answer-button" (click)="selectAnswer(answer)">
+                  {{ answer }}
+                </button>
+              </div>
+            </div>
+          </div>
+          <div nz-col nzSpan="24" class="next-button-container">
+            <button nz-button nzType="primary" (click)="nextQuestion()">Next Question</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nz-content>

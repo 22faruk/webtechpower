@@ -36,8 +36,9 @@ export class LoginViewComponent {
   loginErrorMessage: string = 'Invalid username or password. Please try again.';
 
   userservice = inject(UserService)
+  router = inject(Router)
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   login(){
     // this.userservice.loginUser(this.username).subscribe({
@@ -49,6 +50,7 @@ export class LoginViewComponent {
       next: (res:LoginResponse) => {
         console.log(res);
         localStorage.setItem('SessionID',res.data);//Send User to next site
+        this.router.navigate(['/dashboard'])
       },
       error: (err) =>{
         this.loginError=true;
