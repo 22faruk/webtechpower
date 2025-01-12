@@ -4,7 +4,7 @@ import {NzDividerComponent} from 'ng-zorro-antd/divider';
 import {NzColDirective, NzRowDirective} from 'ng-zorro-antd/grid';
 import {NzTypographyComponent} from 'ng-zorro-antd/typography';
 import {NzButtonComponent} from 'ng-zorro-antd/button';
-import {NgForOf, NgIf} from '@angular/common';
+import {NgClass, NgForOf, NgIf} from '@angular/common';
 import {FlashcardsService} from '../../services/flashcards-service/flashcards.service';
 import {SubjectService} from '../../services/subject-service/subject.service';
 import ISubject, {IDirectory} from '../../models/subject';
@@ -26,7 +26,8 @@ import {strict} from 'node:assert';
     NgForOf,
     NgIf,
     NzInputDirective,
-    FormsModule
+    FormsModule,
+    NgClass
   ],
   templateUrl: './flashcards-view.component.html',
   styleUrl: './flashcards-view.component.css'
@@ -47,6 +48,7 @@ export class FlashcardsViewComponent implements OnInit{
   currentFlashcardIndex: number = 0;
   maxLength : number = 0;
   openFlashcardUpdate: boolean = false;
+  isAscending: boolean = true;
 
   flashcardService = inject(FlashcardsService)
   subjectService = inject(SubjectService)
@@ -76,10 +78,10 @@ export class FlashcardsViewComponent implements OnInit{
     this.maxLength = this.currentFolder.flashcards.length-1;
   }
 
-  updateFlashcard(newQuestion: string, newAnswer: string) {
-    if (this.currentFlashcard) {
-      const flashcardId: string = this.currentFlashcard?._id;
-      this.flashcardService.updateFlashcard(flashcardId, newQuestion, newAnswer)
+  updateFlashcard(newQuestion: string, newAnswer: string, card: IFlashcard|null) {
+    if (this.currentFlashcard && card) {
+      const flashcardId: string = card._id;
+      this.flashcardService.updateFlashcard(flashcardId, newQuestion, newAnswer, card.count)
         .subscribe({
           next: () => {
             console.log("flashcard updated")
@@ -237,16 +239,18 @@ export class FlashcardsViewComponent implements OnInit{
   openUpdateFlashcard(){
     this.openFlashcardUpdate = true;
   }
-  rightOrWrong(answer: string){
+  rightOrWrong(answer: string,card: IFlashcard){
     if(this.currentFlashcard) {
       const oldAnswer: string= this.currentFlashcard.answer;
       const oldQuestion: string = this.currentFlashcard.question;
       if (answer == "right") {
-        const newCount = this.currentFlashcard.count++;
-        this.updateFlashcard(oldQuestion,oldAnswer)
+        card.count++;
+        this.updateFlashcard(oldQuestion,oldAnswer,card)
+        card.showAnswer = false;
       } else {
-        const newCount = 0;
-        this.updateFlashcard(oldQuestion,oldAnswer);
+        card.count = 0;
+        this.updateFlashcard(oldQuestion,oldAnswer,card);
+        card.showAnswer = false;
       }
     }
   }
@@ -258,6 +262,14 @@ export class FlashcardsViewComponent implements OnInit{
         }})
       this.currentFlashcard = null;
       window.location.reload();
+    }
+  }
+  sortFlashcards(){
+    if (this.currentFolder) {
+      this.currentFolder.flashcards.sort((a, b) =>
+        this.isAscending ? a.count - b.count : b.count - a.count
+      );
+      this.isAscending = !this.isAscending;
     }
   }
 }

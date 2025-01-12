@@ -18,11 +18,12 @@ export class FlashcardsService {
       }
       )
   }
-  updateFlashcard(flashcardId: string, newQuestion: string, newAnswer: string){
+  updateFlashcard(flashcardId: string, newQuestion: string, newAnswer: string, count: number){
     return this.http.patch(`${environment.api}/flashcard/${flashcardId}/update`,
       {
         newQuestion,
-        newAnswer
+        newAnswer,
+        count
       }
     )
   }

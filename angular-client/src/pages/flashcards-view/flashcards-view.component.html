@@ -105,6 +105,7 @@
         <div class="sorting-buttons">
           <button nz-button nzType="primary" (click)="toggleFlashcardView(false)">Single View</button>
           <button nz-button nzType="primary" (click)="toggleFlashcardView(true)">Multi View</button>
+          <button nz-button nzType="default" (click)="sortFlashcards()">Sort</button>
           <button nz-button nzType="primary" *ngIf="currentFlashcard" (click)="openUpdateFlashcard()">Change</button>
           <button nz-button nzType="primary" *ngIf="currentFlashcard" (click)="deleteFlashcard()">Delete</button>
         </div>
@@ -114,18 +115,29 @@
             <input #newFlashcardQuestion type="text" nz-input placeholder="Enter new Question" />
             <input #newFlashcardAnswer type="text" nz-input placeholder="Enter new Answer" />
             <div class="popup-buttons">
-              <button nz-button nzType="primary" (click)="updateFlashcard(newFlashcardQuestion.value,newFlashcardAnswer.value)">Confirm</button>
+              <button nz-button nzType="primary" (click)="updateFlashcard(newFlashcardQuestion.value,newFlashcardAnswer.value,currentFlashcard)">Confirm</button>
               <button nz-button nzType="default" (click)="closePopup()">Cancel</button>
             </div>
           </div>
         </div>
         <div *ngIf="currentFolder && flashcardViewMulti" class="flashcards">
-          <div *ngFor="let card of currentFolder.flashcards" (click)="selectFlashcard(card)" class="flashcard" [class.selected]="card == currentFlashcard">
+          <div *ngFor="let card of currentFolder.flashcards"
+               (click)="selectFlashcard(card)"
+               class="flashcard"
+               [class.selected]="card == currentFlashcard">
+            <!-- Punkt/Viereck abhängig von `count` -->
+            <div class="status-indicator"
+                 [ngClass]="{
+           'count-zero': card.count === 0,
+           'count-one': card.count === 1,
+           'count-two': card.count >= 2
+         }">
+            </div>
             <h3>{{ card.question }}</h3>
             <p *ngIf="card.showAnswer">{{ card.answer }}</p>
             <div *ngIf="card.showAnswer">
-              <button nz-button nzType="link" (click)="rightOrWrong('right')">Right</button>
-              <button nz-button nzType="link" (click)="rightOrWrong('wrong')">Wrong</button>
+              <button nz-button nzType="link" (click)="rightOrWrong('right', card)">Right</button>
+              <button nz-button nzType="link" (click)="rightOrWrong('wrong', card)">Wrong</button>
             </div>
             <button nz-button nzType="link" *ngIf="!card.showAnswer" (click)="toggleShowAnswer(card)">Show Answer</button>
             <button nz-button nzType="link" *ngIf="card.showAnswer" (click)="toggleShowAnswer(card)">Hide Answer</button>
@@ -134,12 +146,19 @@
         <div *ngIf="currentFolder && !flashcardViewMulti" class="flashcard-single">
           <div class="flashcard-large" [class.selected]="currentFolder.flashcards[currentFlashcardIndex] == currentFlashcard" (click)="selectFlashcard(currentFolder.flashcards[currentFlashcardIndex])">
             <div *ngIf="currentFolder?.flashcards?.[currentFlashcardIndex] as currentFlashcard">
+              <div class="status-indicator"
+                   [ngClass]="{
+           'count-zero': currentFlashcard.count === 0,
+           'count-one': currentFlashcard.count === 1,
+           'count-two': currentFlashcard.count >= 2
+         }">
+              </div>
               <h3>{{ currentFlashcard.question }}</h3>
               <p *ngIf="currentFolder.flashcards[currentFlashcardIndex].showAnswer">{{ currentFlashcard.answer }}</p>
             </div>
-            <div *ngIf="currentFolder.flashcards[currentFlashcardIndex].showAnswer">
-              <button nz-button nzType="link" (click)="rightOrWrong('right')">Right</button>
-              <button nz-button nzType="link" (click)="rightOrWrong('wrong')">Wrong</button>
+            <div *ngIf="currentFolder.flashcards[currentFlashcardIndex].showAnswer ">
+              <button nz-button nzType="link" (click)="rightOrWrong('right',currentFolder.flashcards[currentFlashcardIndex])">Right</button>
+              <button nz-button nzType="link" (click)="rightOrWrong('wrong', currentFolder.flashcards[currentFlashcardIndex])">Wrong</button>
             </div>
             <button nz-button nzType="link" *ngIf="!currentFolder.flashcards[currentFlashcardIndex].showAnswer" (click)="toggleShowAnswer(currentFolder.flashcards[currentFlashcardIndex])">Show Answer</button>
             <button nz-button nzType="link"  *ngIf="currentFolder.flashcards[currentFlashcardIndex].showAnswer" (click)="toggleShowAnswer(currentFolder.flashcards[currentFlashcardIndex])">Hide Answer</button>

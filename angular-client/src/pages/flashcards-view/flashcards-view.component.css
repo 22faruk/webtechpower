@@ -76,6 +76,7 @@ li:hover {
   padding: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, background-color 0.2s;
+  position: relative;
 }
 
 .flashcard:hover {
@@ -134,6 +135,7 @@ li:hover {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 80%;
   max-width: 600px;
+  position: relative;
 }
 
 .navigation-buttons {
@@ -156,4 +158,29 @@ li:hover {
   transform: scale(1.05);
   transition: all 0.2s ease-in-out;
 }
+/* Status-Indikator */
+.status-indicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%; /* Runde Form */
+  border: 2px solid #fff; /* Weißer Rand für bessere Sichtbarkeit */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Schatten für Tiefe */
+}
+
+/* Farben für die Indikatoren */
+.count-zero {
+  background-color: #ff4d4f; /* Rot für `count === 0` */
+}
+
+.count-one {
+  background-color: #ffc107; /* Gelb für `count === 1` */
+}
+
+.count-two {
+  background-color: #52c41a; /* Grün für `count === 2` */
+}
+
 
