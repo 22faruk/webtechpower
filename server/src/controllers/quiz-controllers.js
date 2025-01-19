@@ -51,7 +51,7 @@ exports.createQuiz = async(req, res, next) => {
             flashcards = directory.flashcards;
         }
 
-        const quiz = await Quiz.findOneAndUpdate({owner:userId},{flashcards:flashcards},{new:true, upsert:true}).populate({path: 'flashcards', select: 'question answer'});
+        const quiz = await Quiz.findOneAndUpdate({owner:userId},{flashcards:flashcards,numRemainingFlashcards:flashcards.length},{new:true, upsert:true}).populate({path: 'flashcards', select: 'question answer'});
 
         return res.status(200).json({
             message: "Successfully created Quiz",
@@ -73,25 +73,35 @@ exports.nextQuestion = async(req,res,next) => {
     
         const quiz = await Quiz.findOne({owner: userId}).populate({path: 'flashcards', select: 'question answer'});
         if(!quiz) throw new Error(`User with id: ${userId} has no quiz!`);
+
+        if(0 == quiz.numRemainingFlashcards) throw new Error(`No more questions available!`);
         
-        flashcards = quiz.flashcards.slice();
-        const num_answers=4;
-        const questionAnswers={question:"", questionId:null, answers:[]};
+        const flashcards = quiz.flashcards;
+        const numAnswers = 4;
+        const questionAnswers = {question:"", questionId:null, answers:[]};
 
-        for(let i=0;i<num_answers && flashcards.length>0;++i)
-        {
-            const randomIndex = randomNumber(0,flashcards.length);
-            flashcard = flashcards[randomIndex];
-            flashcards.splice(randomIndex,1);
+        for(let i = 0; i < numAnswers; ++i) {
+            //pushes correct answer into the first entry of the answers array
+            if(0 == i) {
+                const randomIndex = randomNumber(0, quiz.numRemainingFlashcards);
+                const flashcard = flashcards[randomIndex];
 
-            if(0==i)
-            {
-                quiz.flashcards.splice(randomIndex,1);
-                questionAnswers.question=flashcard.question;
-                questionAnswers.questionId=flashcard._id;
+                //swaps randomly choosen flashcard with the last flashcard in the array (so the remaining flashcards will always be in the range [0,numRemainingFlashcards))
+                const tmp = flashcards[quiz.numRemainingFlashcards - 1];
+                flashcards[randomIndex] = tmp;
+                flashcards[quiz.numRemainingFlashcards - 1] = flashcard;
+                --quiz.numRemainingFlashcards;
+
+                questionAnswers.question = flashcard.question;
+                questionAnswers.questionId = flashcard._id;
+                questionAnswers.answers.push(flashcard.answer);
             }
 
-            questionAnswers.answers.push(flashcard.answer);
+            else {
+                const randomIndex = randomNumber(0, flashcards.length);
+                const flashcard = flashcards[randomIndex];
+                questionAnswers.answers.push(flashcard.answer);
+            }
         }
 
         await quiz.save();

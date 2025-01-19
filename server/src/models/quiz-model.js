@@ -9,7 +9,13 @@ const quizSchema = new Schema({
         required: true
     },
 
-    flashcards: [{type: Schema.Types.ObjectId, ref: "Flashcard"}]
+    flashcards: [{
+        type: Schema.Types.ObjectId, ref: "Flashcard"
+    }],
+    
+    numRemainingFlashcards: {
+        type: Number
+    }
 })
 
 module.exports = mongoose.model("Quiz", quizSchema);
