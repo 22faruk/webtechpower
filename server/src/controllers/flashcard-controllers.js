@@ -11,7 +11,7 @@ exports.updateFlashcard = async(req, res, next) => {
             answer: newAnswer,
         }
 
-        if(count !== null && count !== undefined) {
+        if(count) {
             updateFields.count = count;
         }
 
