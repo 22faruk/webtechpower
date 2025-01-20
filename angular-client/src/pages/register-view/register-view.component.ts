@@ -36,12 +36,13 @@ export class RegisterViewComponent {
   registerError: boolean = false;
   registerErrorMessage: string = 'Username already taken. Please try again.';
 
-  userservice = inject(UserService)
+  userService = inject(UserService)
+  router = inject(Router)
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   register(){
-    this.userservice.registerUser(this.username, this.name, this.email, this.password).subscribe({
+    this.userService.registerUser(this.username, this.name, this.email, this.password).subscribe({
       next: (res:UserResponse) => {
         console.log(res);
       },

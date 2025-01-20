@@ -1,8 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {NzCardComponent} from 'ng-zorro-antd/card';
-import {NzRadioComponent, NzRadioGroupComponent} from 'ng-zorro-antd/radio';
 import {FormsModule} from '@angular/forms';
-import {NgClass, NgForOf, NgIf} from '@angular/common';
+import {NgForOf} from '@angular/common';
 import {QuizService} from '../../services/quiz-service/quiz.service';
 import {GetQuestionResponse} from '../../models/response/getQuestion-response';
 import {NzContentComponent} from 'ng-zorro-antd/layout';
@@ -15,13 +13,8 @@ import {NzButtonComponent} from 'ng-zorro-antd/button';
   selector: 'app-quiz',
   standalone: true,
   imports: [
-    NzCardComponent,
-    NzRadioGroupComponent,
     FormsModule,
-    NzRadioComponent,
     NgForOf,
-    NgClass,
-    NgIf,
     NzContentComponent,
     NzRowDirective,
     NzColDirective,
@@ -53,7 +46,7 @@ export class QuizComponent implements OnInit{
     console.log(this.question.answers)
   }
 
-  selectAnswer(answer: any) {
+  selectAnswer(answer: string) {
 
   }
 
