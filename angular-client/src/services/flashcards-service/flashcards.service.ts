@@ -11,7 +11,7 @@ export class FlashcardsService {
   constructor() { }
 
   createFlashcard(subjectId: string, question: string, answer: string, folderName: string){
-    return this.http.post(`${environment.api}/flashcard/${subjectId}/${folderName}/create`,
+    return this.http.post(`${environment.api}/flashcard/${subjectId}/${folderName}`,
       {
         question,
         answer
@@ -19,7 +19,7 @@ export class FlashcardsService {
       )
   }
   updateFlashcard(flashcardId: string, newQuestion: string, newAnswer: string, count: number){
-    return this.http.patch(`${environment.api}/flashcard/${flashcardId}/update`,
+    return this.http.patch(`${environment.api}/flashcard/${flashcardId}`,
       {
         newQuestion,
         newAnswer,

@@ -2,7 +2,7 @@ const Flashcard = require("../models/flashcard-model");
 const User = require("../models/user-model");
 const Subject = require("../models/subject-model");
 
-exports.updateFlashcard = async(req, res, next) => {
+exports.updateFlashcard = async(req, res, next) => { //updateFlashcard used for: 1. update question/answer, 2. update correct answer streak
     const flashcardId = req.params.flashcardId;
     const {newQuestion, newAnswer, count} = req.body;
     try {
@@ -11,7 +11,7 @@ exports.updateFlashcard = async(req, res, next) => {
             answer: newAnswer,
         }
 
-        if(count) {
+        if(count) { //optional
             updateFields.count = count;
         }
 
@@ -70,23 +70,17 @@ exports.createCard = async(req, res, next) => {
 
 exports.deleteFlashcard = async(req, res, next) => {
     const flashcardId = req.params.flashcardId;
-    await Flashcard.findByIdAndDelete(flashcardId);
-    await Subject.updateMany(
-        {"directories.flashcards": flashcardId},
-        {$pull: { "directories.$[].flashcards": flashcardId }})
-    return res.status(200).json({
-        message: "Flashcard wurde entfernt"
-    })
-
+    try {
+        await Flashcard.findByIdAndDelete(flashcardId);
+        await Subject.updateMany(
+            {"directories.flashcards": flashcardId},
+            {$pull: { "directories.$[].flashcards": flashcardId }})
+        return res.status(200).json({
+            message: "Flashcard wurde entfernt"
+        })
+    }
+    catch (error) {
+        next(error)
+    }
 }
 
-exports.test = async(req, res, next) => {
-    const subjectId = req.params.subjectId;
-    const subject = await Subject.findById(subjectId);
-    const owner = await User.findById(subject.owner);
-    console.log(subject.owner)
-    console.log()
-    return res.status(200).json({
-        data: subject.owner, owner
-    })
-}

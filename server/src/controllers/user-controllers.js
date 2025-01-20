@@ -1,10 +1,10 @@
 const User = require("../models/user-model");
 const jwt = require('jsonwebtoken')
-var bcrypt = require('bcryptjs')
+var bcrypt = require('bcryptjs') //used for hashing pw
 
 exports.registerUser = async (req, res, next) => {
     let {username, name, email} = req.body;
-    let password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+    let password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10)); //salt: sequence of characters, added to string
     try {
         const newUser = await new User({username, name, password, email}).save();
         return res.status(201).json({
@@ -26,7 +26,7 @@ exports.loginUser = async (req, res, next) => {
             });
         }
         else {
-            let checkPW = bcrypt.compare(password, user.password);
+            let checkPW = await bcrypt.compare(password, user.password);
             if(!checkPW)
             {
                 return res.status(401).send({
@@ -35,7 +35,7 @@ exports.loginUser = async (req, res, next) => {
             }
             else
             {
-                const token = jwt.sign({_id: user._id}, "secret");
+                const token = jwt.sign({_id: user._id}, "secret"); //jwt token for authorization
 
                 return res.status(200).json({
                     message: 'Login succesful',
@@ -44,19 +44,6 @@ exports.loginUser = async (req, res, next) => {
             }
         }
     } catch (error)
-    {
-        next(error);
-    }
-};
-
-exports.testMethod = async (req, res, next) => {
-    try {
-        console.log(req.user._id);
-        return res.status(200).json({
-            message: 'Test erfolgreich'
-        });
-    }
-    catch (error)
     {
         next(error);
     }
