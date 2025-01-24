@@ -8,6 +8,6 @@ const quizRouter = express.Router();
 quizRouter.post("/:subjectId/:directoryId?", requestLogger, authenticateToken, quizController.createQuiz);
 quizRouter.get("/", requestLogger, authenticateToken, quizController.nextQuestion);
 quizRouter.get("/numRemainingQuestions", requestLogger, authenticateToken, quizController.numRemainingQuestions);
-quizRouter.get("/validate/:questionId", requestLogger, authenticateToken, quizController.validateQuestion);
+quizRouter.patch("/validate/:questionId", requestLogger, authenticateToken, quizController.validateQuestion);
 
 module.exports = quizRouter;

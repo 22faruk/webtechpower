@@ -84,7 +84,7 @@ exports.nextQuestion = async(req,res,next) => {
         if(0 == quiz.numRemainingFlashcards) {
             throw new Error(`No more questions available!`);
         }
-        
+
         const flashcards = quiz.flashcards;
         const numAnswers = 4;
         const questionAnswers = {question:"", questionId:null, answers:[]};
