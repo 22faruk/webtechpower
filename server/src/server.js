@@ -21,19 +21,18 @@ app.use(express.json());
 
 if (process.env.NODE_ENV !== "production") {
   console.log("NODE_ENV", process.env.NODE_ENV);
-  app.use(cors({ 
-    origin: [
-      "http://localhost:4200", 
-      "http://localhost:5173"
-    ] 
-  }));
+  app.use(
+    cors({
+      origin: ["http://localhost:4200", "http://localhost:5173"],
+    })
+  );
 }
 
 app.use("/todos", todoRouter);
 
 app.use("/users", userRouter);
 
-app.use("/flashcard", flashcardRouter)
+app.use("/flashcard", flashcardRouter);
 
 app.use("/subjects", subjectRouter);
 
@@ -50,8 +49,6 @@ app.get("*", (req, res) => {
     )
   );
 });
-
-
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

@@ -12,11 +12,23 @@ userRouter.post("/session", validator.validateLogin, userController.loginUser);
 
 userRouter.get("/:userId", authenticateToken, userController.getUser);
 
-userRouter.patch("/friendRequest", authenticateToken, userController.sendFriendRequest);
+userRouter.patch(
+  "/friendRequest",
+  authenticateToken,
+  userController.sendFriendRequest
+);
 
-userRouter.patch("/accept", authenticateToken, userController.acceptFriendRequest);
+userRouter.patch(
+  "/accept",
+  authenticateToken,
+  userController.acceptFriendRequest
+);
 
-userRouter.patch("/decline", authenticateToken, userController.declineFriendRequest);
+userRouter.patch(
+  "/decline",
+  authenticateToken,
+  userController.declineFriendRequest
+);
 
 userRouter.patch("/remove", authenticateToken, userController.removeFriend);
 
