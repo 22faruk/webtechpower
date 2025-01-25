@@ -73,9 +73,9 @@ exports.nextQuestion = async (req, res, next) => {
   try {
     const userId = req.user
       ? req.user._id
-      : (req.body.user
+      : req.body.user
       ? req.body.user._id
-      : undefined);
+      : undefined;
     if (!userId) throw new Error("No user id provided!");
 
     //const userId = req.user._id;
@@ -96,30 +96,38 @@ exports.nextQuestion = async (req, res, next) => {
     }
 
     const flashcards = quiz.flashcards;
-    const numAnswers = 4;
     const questionAnswers = { question: "", questionId: null, answers: [] };
 
-    for (let i = 0; i < numAnswers; ++i) {
-      //pushes correct answer into the first entry of the answers array
-      if (0 == i) {
-        const randomIndex = randomNumber(0, quiz.numRemainingFlashcards);
-        const flashcard = flashcards[randomIndex];
+    //correct answer is always the first entry of the answers array
+    let randomIndex = randomNumber(0, quiz.numRemainingFlashcards);
+    let flashcard = flashcards[randomIndex];
+    questionAnswers.question = flashcard.question;
+    questionAnswers.questionId = flashcard._id;
+    questionAnswers.answers.push(flashcard.answer);
+    --quiz.numRemainingFlashcards;
 
-        //swaps the randomly choosen flashcard with the last flashcard in the array (so remaining flashcards will always be in the range [0,numRemainingFlashcards))
-        const tmp = flashcards[quiz.numRemainingFlashcards - 1];
-        flashcards[randomIndex] = tmp;
-        flashcards[quiz.numRemainingFlashcards - 1] = flashcard;
-        --quiz.numRemainingFlashcards;
+    //swaps the randomly choosen flashcard with the last flashcard in the array (so remaining flashcards will always be in the range [0,numRemainingFlashcards))
+    const tmp = flashcards[quiz.numRemainingFlashcards];
+    flashcards[randomIndex] = tmp;
+    flashcards[quiz.numRemainingFlashcards] = flashcard;
 
-        questionAnswers.question = flashcard.question;
-        questionAnswers.questionId = flashcard._id;
-        questionAnswers.answers.push(flashcard.answer);
-      } else {
-        const randomIndex = randomNumber(0, flashcards.length);
-        const flashcard = flashcards[randomIndex];
+    //total of 4 different possible answers (if there are less than 4 flashcards available then this just picks as many flashcards as possible)
+    const numAnswers = Math.min(4, flashcards.length);
+    let pickedFlashcards = [flashcard];
 
-        questionAnswers.answers.push(flashcard.answer);
-      }
+    for (let i = 1; i < numAnswers; ++i) {
+      //prevents duplicates; picks random flashcards until it finds one, that it didn't pick before
+      do {
+        randomIndex = randomNumber(0, flashcards.length);
+        flashcard = flashcards[randomIndex];
+      } while (
+        pickedFlashcards.some((otherFlashcard, _) =>
+          otherFlashcard._id.equals(flashcard._id)
+        )
+      );
+
+      pickedFlashcards.push(flashcard);
+      questionAnswers.answers.push(flashcard.answer);
     }
 
     await quiz.save();
@@ -137,9 +145,9 @@ exports.numRemainingQuestions = async (req, res, next) => {
   try {
     const userId = req.user
       ? req.user._id
-      : (req.body.user
+      : req.body.user
       ? req.body.user._id
-      : undefined);
+      : undefined;
     if (!userId) throw new Error("No user id provided!");
 
     //const userId = req.user._id;

@@ -4,21 +4,28 @@ const requestLogger = require("../middleware/logger-middleware");
 const authenticateToken = require("../middleware/jwt-authentication-middleware");
 
 const quizRouter = express.Router();
-quizRouter.use([requestLogger/*,authenticateToken*/]);
 quizRouter.post(
   "/:subjectId/:directoryId?",
+  requestLogger,
+  authenticateToken,
   quizController.createQuiz
 );
 quizRouter.get(
   "/",
+  requestLogger,
+  authenticateToken,
   quizController.nextQuestion
 );
 quizRouter.get(
   "/numRemainingQuestions",
+  requestLogger,
+  authenticateToken,
   quizController.numRemainingQuestions
 );
 quizRouter.patch(
   "/validate/:questionId",
+  requestLogger,
+  authenticateToken,
   quizController.validateQuestion
 );
 
