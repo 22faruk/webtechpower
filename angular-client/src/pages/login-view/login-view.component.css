@@ -1,38 +1,67 @@
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(to bottom right, #e3f2fd, #4a90e2);
+  color: #333;
+  height: 100vh;
+ }
 .container {
   padding: 24px;
-  min-height: 85vh;
-}
-
-.grid {
-  max-width: 600px;
-  padding-bottom: 8px
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .grid-container {
-  max-width: 600px;
-  padding: 2rem;
-  border-radius: 6px;
-  border: 3px solid #d6d4d4;
+  max-width: 400px;
+  width: 100%;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 24px;
 }
 
-.todo-card {
+h1 {
+  text-align: center;
+  color: #4a90e2;
+}
+
+nz-form-item {
+  margin-bottom: 16px;
+}
+
+button {
+  width: 100%;
   padding: 12px;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  border-radius: 8px;
-  transition: background-color 0.2s ease-in-out;
+  font-size: 16px;
   border-radius: 6px;
-  border: 1px solid #b7b7b7;
+  margin-top: 8px;
+  transition: background-color 0.3s;
 }
 
-.todo-card:hover {
-  background-color: #dfdfdf;
+button.primary {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
 }
 
-.login-button {
-  padding-bottom: 12px;
+button.primary:hover {
+  background-color: #3b78c2;
 }
 
-nz-divider {
-  margin-top: 0;
+button.secondary {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+button.secondary:hover {
+  background-color: #e0e0e0;
+}
+
+.login-error {
+  text-align: center;
+  color: red;
+  margin-top: 16px;
 }

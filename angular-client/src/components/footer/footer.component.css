@@ -1,19 +1,32 @@
 .footer-container {
-    padding: 8px 16px;
-    align-items: center;
-  }
-  
-  .follow-us {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  .follow-us span {
-    margin-right: 8px;
-  }
-  
-  p {
-    margin-bottom: 0;
-  }
-  
+  background-color: #4a90e2;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  font-size: 14px;
+}
+
+.follow-us {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.follow-us button {
+  background-color: white;
+  color: #4a90e2;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.follow-us button:hover {
+  background-color: #ddd;
+}

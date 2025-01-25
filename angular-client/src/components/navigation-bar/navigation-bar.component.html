@@ -1,21 +1,17 @@
-<nz-header>
-  <div class="header-container">
-  <h2 nz-typography style="color: white; margin-bottom: 0px">
-    FUIZ
-  </h2>
-      <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
-        <li nz-menu-item>
-          <button nz-button nzType="default" (click)="navigateToHome()">Dashboard</button>
-        </li>
-        <li nz-menu-item>
-          <button nz-button nzType="default" (click)="navigateToFlashcards()">Flashcards</button>
-        </li>
-        <li nz-menu-item>
-          <button nz-button nzType="default" (click)="navigateToQuiz()">Quiz</button>
-        </li>
-        <li nz-menu-item>
-          <button nz-button nzType="default" (click)="navigateToFriends()">Friends</button>
-        </li>
-      </ul>
-    </div>
+<nz-header class="header-container">
+  <div class="logo">FUIZ</div>
+  <ul class="header-menu">
+    <li>
+      <button (click)="navigateToHome()">Dashboard</button>
+    </li>
+    <li>
+      <button (click)="navigateToFlashcards()">Flashcards</button>
+    </li>
+    <li>
+      <button (click)="navigateToQuiz()">Quiz</button>
+    </li>
+    <li>
+      <button (click)="navigateToFriends()">Friends</button>
+    </li>
+  </ul>
 </nz-header>

@@ -1,38 +1,17 @@
-<nz-footer>
-  <div nz-row nzJustify="space-between" nzAlign="middle">
-
-
-    <div nz-col>
-      <div nz-row nzJustify="center" nzAlign="middle" [nzGutter]="16">
-        <div nz-col>
-          <p nz-typography>Questions? Send us a text</p>
-        </div>
-        <div nz-col>
-          <button
-            nz-button
-            nzType="primary"
-            nzDanger
-            nzShape="circle"
-            (click)="
-              openLink(
-                'https://www.youtube.com/channel/UCQV36Dfq-mfmAG0SqrQ_QbA'
-              )
-            "
-          >
-            <span nz-icon nzType="instagram" nzTheme="outline"></span>
-          </button>
-        </div>
-        <div nz-col>
-          <button
-            nz-button
-            nzType="primary"
-            nzShape="circle"
-            (click)="openLink('https://github.com/ude-soco')"
-          >
-            <span nz-icon nzType="x" nzTheme="outline"></span>
-          </button>
-        </div>
-      </div>
-    </div>
+<nz-footer class="footer-container">
+  <p>Fragen? <a href="mailto:support@fuiz.com" style="color: white;">Schreib uns!</a></p>
+  <div class="follow-us">
+    <button
+      (click)="openLink('https://www.instagram.com')"
+      aria-label="Instagram"
+    >
+      <span nz-icon nzType="instagram" nzTheme="outline"></span>
+    </button>
+    <button
+      (click)="openLink('https://github.com')"
+      aria-label="GitHub"
+    >
+      <span nz-icon nzType="github" nzTheme="outline"></span>
+    </button>
   </div>
 </nz-footer>

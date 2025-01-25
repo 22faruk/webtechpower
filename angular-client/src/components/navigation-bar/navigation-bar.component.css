@@ -1,29 +1,38 @@
-button {
-    margin-left: 4px;
-    margin-right: 4px;
-}
 .header-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
+  padding: 16px 32px;
+  background-color: #4a90e2;
+  color: white;
 }
 
 .logo {
-  width: 120px;
-  height: 31px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 16px 24px 16px 0;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
 }
 
 .header-menu {
   display: flex;
-  flex: 1;
-  justify-content: flex-end;
-  align-items: center;
+  list-style: none;
+  margin: 0;
 }
 
-.header-menu li
-{
-  margin: 0 8px;
+.header-menu li {
+  margin: 0 16px;
+}
+
+.header-menu button {
+  background: transparent;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.header-menu button:hover {
+  background: white;
+  color: #4a90e2;
 }
