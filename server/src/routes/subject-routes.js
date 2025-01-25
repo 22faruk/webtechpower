@@ -1,20 +1,24 @@
 const express = require("express");
 const subjectController = require("../controllers/subject-controllers");
-const requestLogger = require("../middleware/logger-middleware");
 const authenticateToken = require("../middleware/jwt-authentication-middleware");
 
 const subjectRouter = express.Router();
 
-subjectRouter.post("/", authenticateToken, subjectController.createSubject);
+subjectRouter.use(authenticateToken);
 
-subjectRouter.get("/", authenticateToken, subjectController.getSubjects);
+subjectRouter.post("/", subjectController.createSubject);
 
-subjectRouter.get("/:subjectId", authenticateToken, subjectController.getDirectories);
+subjectRouter.get("/", subjectController.getSubjects);
 
-//subjectRouter.patch("/:subjectId/directories", authenticateToken, subjectController.updateDirectories);
+subjectRouter.get("/:subjectId", subjectController.getDirectories);
 
-subjectRouter.patch("/:subjectId", authenticateToken, subjectController.updateSubject);
+subjectRouter.patch(
+  "/:subjectId/directories",
+  subjectController.updateDirectories
+);
 
-subjectRouter.delete("/:subjectId", authenticateToken, subjectController.deleteSubject);
+subjectRouter.patch("/:subjectId", subjectController.updateSubject);
+
+subjectRouter.delete("/:subjectId", subjectController.deleteSubject);
 
 module.exports = subjectRouter;
