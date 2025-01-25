@@ -4,12 +4,14 @@ import ISubject from '../../models/subject';
 import IFlashcard from '../../models/flashcard';
 
 import { SharedAntDesignModule } from '../../module/shared-ant-design/shared-ant-design.module';
+import {DecimalPipe} from '@angular/common';
 
 @Component({
   selector: 'app-dashboard-view',
   standalone: true,
   imports: [
-    SharedAntDesignModule
+    SharedAntDesignModule,
+    DecimalPipe
   ],
   templateUrl: './dashboard-view.component.html',
   styleUrl: './dashboard-view.component.css'
