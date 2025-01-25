@@ -1,5 +1,39 @@
 <nz-content>
-  <div class="container">
+  <div *ngIf="!displayQuestion" class="container">
+    <div class="quiz-container">
+      <h2>Create a New Quiz</h2>
+      <div nz-row nzJustify="center" nzAlign="middle">
+        <div nz-col nzSpan="12">
+          <nz-form-item>
+            <nz-form-label> Select Category </nz-form-label>
+            <nz-form-control>
+              <nz-select [(ngModel)]="selectedSubject">
+                <nz-option *ngFor="let subject of subjects" nzValue="{{subject}}" nzLabel="{{subject.subjectName}}"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div *ngIf="!selectedSubject" nz-row nzJustify="center" nzAlign="middle">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>Select Difficulty</nz-form-label>
+          <nz-form-control>
+            <nz-select [(ngModel)]="selectedDiretory">
+              <nz-option *ngFor="let directory of selectedSubject" nzValue="{{directory}}" nzLabel="{{directory.folderName}}"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      </div>
+    </div>
+    <div nz-row nzJustify="center" nzAlign="middle">
+      <div nz-col nzSpan="12">
+        <button nz-button nzType="primary" (click)="createQuiz()">Create Quiz</button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="displayQuestion" class="container">
     <div nz-row nzJustify="center">
       <div nz-col nzSpan="24" class="grid-container">
         <div nz-row nzJustify="center">

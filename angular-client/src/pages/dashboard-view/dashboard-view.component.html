@@ -1,5 +1,22 @@
 <nz-content>
   <div class="container">
-    <p>To be implemented</p>
+    <div class="welcome-box">
+      <h2>Welcome Back to Your Dashboard!</h2>
+      <p>We're excited to see your progress today. Keep up the great work!</p>
+    </div>
+    <div class="progress-container">
+      <div class="progress-box">
+        <h3>Not Finished</h3>
+        <nz-progress [nzPercent]="stat_zero" nzType="circle" [nzWidth]="264"></nz-progress>
+      </div>
+      <div class="progress-box">
+        <h3>On Your Way</h3>
+        <nz-progress [nzPercent]="stat_once" nzType="circle" [nzWidth]="264"></nz-progress>
+      </div>
+      <div class="progress-box">
+        <h3>Ready</h3>
+        <nz-progress [nzPercent]="stat_good" nzType="circle" [nzWidth]="264"></nz-progress>
+      </div>
+    </div>
   </div>
 </nz-content>

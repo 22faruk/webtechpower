@@ -1,29 +1,18 @@
 import {Component, inject} from '@angular/core';
 import {NgIf} from '@angular/common';
-import {NzColDirective, NzRowDirective} from 'ng-zorro-antd/grid';
-import {NzContentComponent} from 'ng-zorro-antd/layout';
-import {NzDividerComponent} from 'ng-zorro-antd/divider';
 import {FormsModule} from '@angular/forms';
-import {NzButtonComponent} from 'ng-zorro-antd/button';
-import {NzInputDirective} from 'ng-zorro-antd/input';
-import {NzTypographyComponent} from 'ng-zorro-antd/typography';
 import {UserService} from '../../services/user-service/user.service';
 import {UserResponse} from '../../models/response/user-response';
 import { Router } from '@angular/router';
+import {SharedAntDesignModule} from '../../module/shared-ant-design/shared-ant-design.module';
 
 @Component({
   selector: 'app-register-view',
   standalone: true,
   imports: [
     NgIf,
-    NzColDirective,
-    NzContentComponent,
-    NzDividerComponent,
-    NzRowDirective,
     FormsModule,
-    NzButtonComponent,
-    NzInputDirective,
-    NzTypographyComponent
+    SharedAntDesignModule
   ],
   templateUrl: './register-view.component.html',
   styleUrl: './register-view.component.css'
@@ -48,6 +37,7 @@ export class RegisterViewComponent {
       },
       error: (err) => {
         this.registerError=true;
+        this.registerErrorMessage = err.error.message
         console.log(err);
       }
     });

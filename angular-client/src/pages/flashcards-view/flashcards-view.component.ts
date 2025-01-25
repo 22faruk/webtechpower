@@ -1,33 +1,22 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {NzContentComponent} from 'ng-zorro-antd/layout';
-import {NzDividerComponent} from 'ng-zorro-antd/divider';
-import {NzColDirective, NzRowDirective} from 'ng-zorro-antd/grid';
-import {NzTypographyComponent} from 'ng-zorro-antd/typography';
-import {NzButtonComponent} from 'ng-zorro-antd/button';
+
 import {NgClass, NgForOf, NgIf} from '@angular/common';
 import {FlashcardsService} from '../../services/flashcards-service/flashcards.service';
 import {SubjectService} from '../../services/subject-service/subject.service';
 import ISubject, {IDirectory} from '../../models/subject';
 import IFlashcard from '../../models/flashcard';
-import {NzInputDirective} from 'ng-zorro-antd/input';
 import {FormsModule} from '@angular/forms';
-import {strict} from 'node:assert';
+import {SharedAntDesignModule} from '../../module/shared-ant-design/shared-ant-design.module';
 
 @Component({
   selector: 'app-flashcards-view',
   standalone: true,
   imports: [
-    NzContentComponent,
-    NzDividerComponent,
-    NzColDirective,
-    NzTypographyComponent,
-    NzButtonComponent,
-    NzRowDirective,
     NgForOf,
     NgIf,
-    NzInputDirective,
     FormsModule,
-    NgClass
+    NgClass,
+    SharedAntDesignModule
   ],
   templateUrl: './flashcards-view.component.html',
   styleUrl: './flashcards-view.component.css'

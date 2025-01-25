@@ -1,20 +1,30 @@
 <nz-header>
   <div class="header-container">
-  <h2 nz-typography style="color: white; margin-bottom: 0px">
+    <img
+      nz-image
+      width="50px"
+      height="50px"
+      nzSrc="https://cdn.discordapp.com/attachments/1239957701849645069/1332692052257013832/Fuiz.png?ex=67962db1&is=6794dc31&hm=79c24781f6f054ccf37215999e3a6f13eb29c181439d08c8fb8b5668f6b62601&"
+      alt="Logo"
+    />
+    <h2 nz-typography style="color: white; margin-bottom: 0px">
     FUIZ
   </h2>
       <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
         <li nz-menu-item>
-          <button nz-button nzType="default" (click)="navigateToHome()">Dashboard</button>
+          <button nz-button nzType="default" (click)="navigateToHome()" nzGhost>Dashboard</button>
         </li>
         <li nz-menu-item>
-          <button nz-button nzType="default" (click)="navigateToFlashcards()">Flashcards</button>
+          <button nz-button nzType="default" (click)="navigateToFlashcards()" nzGhost>Flashcards</button>
         </li>
         <li nz-menu-item>
-          <button nz-button nzType="default" (click)="navigateToQuiz()">Quiz</button>
+          <button nz-button nzType="default" (click)="navigateToQuiz()" nzGhost>Quiz</button>
         </li>
         <li nz-menu-item>
-          <button nz-button nzType="default" (click)="navigateToFriends()">Friends</button>
+          <button nz-button nzType="default" (click)="navigateToFriends()" nzGhost>Friends</button>
+        </li>
+        <li *ngIf="true" nz-menu-item>
+          <button nz-button nzType="default" (click)="logout()" nzGhost>Logout</button>
         </li>
       </ul>
     </div>

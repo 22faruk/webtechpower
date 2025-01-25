@@ -1,6 +1,7 @@
 import IFlashcard from './flashcard';
 
 export interface IDirectory {
+  _id?:number
   folderName: string;
   flashcards: IFlashcard[]; // Ein Array von Flashcards
 }
