@@ -136,8 +136,8 @@
             <h3>{{ card.question }}</h3>
             <p *ngIf="card.showAnswer">{{ card.answer }}</p>
             <div *ngIf="card.showAnswer">
-              <button nz-button nzType="link" (click)="rightOrWrong('right', card)">Right</button>
-              <button nz-button nzType="link" (click)="rightOrWrong('wrong', card)">Wrong</button>
+              <button nz-button class="custom-button" (click)="rightOrWrong('right', card)">Right</button>
+              <button nz-button class="custom-button"(click)="rightOrWrong('wrong', card)">Wrong</button>
             </div>
             <button nz-button nzType="link" *ngIf="!card.showAnswer" (click)="toggleShowAnswer(card)">Show Answer</button>
             <button nz-button nzType="link" *ngIf="card.showAnswer" (click)="toggleShowAnswer(card)">Hide Answer</button>
@@ -157,8 +157,8 @@
               <p *ngIf="currentFolder.flashcards[currentFlashcardIndex].showAnswer">{{ currentFlashcard.answer }}</p>
             </div>
             <div *ngIf="currentFolder.flashcards[currentFlashcardIndex].showAnswer ">
-              <button nz-button nzType="link" (click)="rightOrWrong('right',currentFolder.flashcards[currentFlashcardIndex])">Right</button>
-              <button nz-button nzType="link" (click)="rightOrWrong('wrong', currentFolder.flashcards[currentFlashcardIndex])">Wrong</button>
+              <button nz-button class="custom-button" (click)="rightOrWrong('right',currentFolder.flashcards[currentFlashcardIndex])">Right</button>
+              <button nz-button class="custom-button" (click)="rightOrWrong('wrong', currentFolder.flashcards[currentFlashcardIndex])">Wrong</button>
             </div>
             <button nz-button nzType="link" *ngIf="!currentFolder.flashcards[currentFlashcardIndex].showAnswer" (click)="toggleShowAnswer(currentFolder.flashcards[currentFlashcardIndex])">Show Answer</button>
             <button nz-button nzType="link"  *ngIf="currentFolder.flashcards[currentFlashcardIndex].showAnswer" (click)="toggleShowAnswer(currentFolder.flashcards[currentFlashcardIndex])">Hide Answer</button>
