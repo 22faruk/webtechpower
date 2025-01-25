@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {QuizResponse} from '../../models/response/quiz-response';
 import {GetQuestionResponse} from '../../models/response/getQuestion-response';
+import {ValidateQuestionResponse} from '../../models/response/validateQuestion-response';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,12 @@ export class QuizService {
 
   getNumOfRemainingRequests(){
     return this.http.get<GetQuestionResponse>(`${environment.api}/quiz/numRemainingQuestions`)
+  }
+
+  validateQuestion(questionId:number, answer:string){
+    return this.http.patch<ValidateQuestionResponse>(`${environment.api}/quiz/validate/${questionId}`, {
+      answer
+    })
   }
 
   shuffleArray(array: string[]): string[] {

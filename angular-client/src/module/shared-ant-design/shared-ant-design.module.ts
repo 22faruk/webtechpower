@@ -10,6 +10,11 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import {NzProgressComponent} from 'ng-zorro-antd/progress';
+import {NzImageModule} from 'ng-zorro-antd/image';
+import {NzTypographyComponent} from 'ng-zorro-antd/typography';
+import {NzMenuDirective} from 'ng-zorro-antd/menu';
+import {NzOptionComponent, NzSelectComponent} from 'ng-zorro-antd/select';
 
 const antDesignComponents = [
   NzButtonModule,
@@ -20,6 +25,12 @@ const antDesignComponents = [
   NzIconModule,
   NzCardModule,
   NzAvatarModule,
+  NzProgressComponent,
+  NzImageModule,
+  NzTypographyComponent,
+  NzMenuDirective,
+  NzSelectComponent,
+  NzOptionComponent,
 ];
 
 @NgModule({

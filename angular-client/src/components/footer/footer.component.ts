@@ -12,7 +12,6 @@ import { SharedAntDesignModule } from '../../module/shared-ant-design/shared-ant
   styleUrl: './footer.component.css',
 })
 export class FooterComponent {
-  currentYear: number = new Date().getFullYear();
 
   openLink(url: string) {
     window.open(url, '_blank');
