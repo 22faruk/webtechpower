@@ -27,7 +27,6 @@ export class FlashcardsViewComponent implements OnInit{
   currentSubject!: ISubject| null;
   currentFolder!: IDirectory| null;
   currentFlashcard !: IFlashcard|null;
-  seeAnswer: boolean = false;
   showAddSubjectModal: boolean= false;
   showAddFolderModal: boolean= false;
   showAddFlashcardModal: boolean= false;

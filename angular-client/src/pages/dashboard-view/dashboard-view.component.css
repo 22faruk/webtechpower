@@ -49,8 +49,36 @@ h3 {
 /* Tooltip-Style */
 .tooltip {
   position: absolute;
-  top: -30px; /* Position above the heading */
+  top: -40px; /* Position above the heading */
   left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  display: none;
+  white-space: nowrap;
+  z-index: 10;
+}
+.tooltip-left {
+  position: absolute;
+  top: -40px; /* Position above the heading */
+  left: 60%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  display: none;
+  white-space: nowrap;
+  z-index: 10;
+}
+.tooltip-right {
+  position: absolute;
+  top: -40px; /* Position above the heading */
+  left: 40%;
   transform: translateX(-50%);
   background-color: rgba(0, 0, 0, 0.75);
   color: white;
@@ -64,6 +92,12 @@ h3 {
 
 /* Only show tooltip on hover over the h3 element */
 h3:hover .tooltip {
+  display: block;
+}
+h3:hover .tooltip-left {
+   display: block;
+ }
+h3:hover .tooltip-right {
   display: block;
 }
 
