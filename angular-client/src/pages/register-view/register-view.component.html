@@ -1,69 +1,43 @@
 <nz-content>
   <div class="container">
-    <div nz-row nzJustify="center">
-      <div nz-col nzSpan="12" class="grid-container">
-        <div nz-row nzJustify="center">
-          <h1 nz-typography>New here?</h1>
-        </div>
-        <div nz-row nzJustify="center">
-          <h2 nz-typography>Register and start</h2>
-        </div>
-        <div nz-row nzJustify="center">
-          <h2 nz-typography>learning right away</h2>
-        </div>
-        <div nz-row nzJustify="center">
-          <nz-divider></nz-divider>
-        </div>
-        <div nz-row nzJustify="center">
-          <div nz-col nzSpan="24">
-            <nz-form-item>
-              <nz-form-label [nzSpan]="6">Username:</nz-form-label>
-              <nz-form-control [nzSpan]="18">
-                <input nz-input placeholder="Enter your username" [(ngModel)]="username" />
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-          <div nz-col nzSpan="24">
-            <nz-form-item>
-              <nz-form-label [nzSpan]="6">Name:</nz-form-label>
-              <nz-form-control [nzSpan]="18">
-                <input nz-input type="password" placeholder="Enter your name" [(ngModel)]="name" />
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-          <div nz-col nzSpan="24">
-            <nz-form-item>
-              <nz-form-label [nzSpan]="6">Email:</nz-form-label>
-              <nz-form-control [nzSpan]="18">
-                <input nz-input type="email" placeholder="Enter your email" [(ngModel)]="email" />
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-          <div nz-col nzSpan="24">
-            <nz-form-item>
-              <nz-form-label [nzSpan]="6">Password:</nz-form-label>
-              <nz-form-control [nzSpan]="18">
-                <input nz-input type="password" placeholder="Enter your password" [(ngModel)]="password" />
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-          <div class="login-button" nz-col nzSpan="24">
-            <div nz-row nzJustify="center">
-              <button nz-button nzType="primary" (click)="register()">Register</button>
-            </div>
-          </div>
-          <div nz-col nzSpan="24">
-            <div nz-row nzJustify="center">
-              <button nz-button nzType="default" class="register-button" (click)="navigateToLogin()">Back to Login</button>
-            </div>
-          </div>
-        </div>
-        <div class="additional-text" nz-row nzJustify="center">
-          <p class="info-text" nz-typography>If you already have an account, please go here.</p>
-        </div>
-        <div class="error-message" nz-row nzJustify="center">
-          <p class="error-text" nz-typography *ngIf="registerError">{{ registerErrorMessage }}</p>
-        </div>
+    <div class="grid-container">
+      <h1>New here?</h1>
+      <h2>Register and start learning right away</h2>
+      <nz-divider></nz-divider>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">Username</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <input nz-input placeholder="Enter your username" [(ngModel)]="username" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">Name</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <input nz-input placeholder="Enter your name" [(ngModel)]="name" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">Email</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <input nz-input type="email" placeholder="Enter your email" [(ngModel)]="email" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6">Password</nz-form-label>
+        <nz-form-control [nzSpan]="18">
+          <input nz-input type="password" placeholder="Enter your password" [(ngModel)]="password" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <button class="primary" (click)="register()">Register</button>
+      <button class="secondary" (click)="navigateToLogin()">Back to Login</button>
+
+      <div *ngIf="registerError">
+        <p class="login-error">{{ registerErrorMessage }}</p>
       </div>
     </div>
   </div>

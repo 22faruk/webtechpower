@@ -1,6 +1,6 @@
 .container {
   padding: 24px;
-  min-height: 85vh;
+  min-height: 84vh;
 }
 
 .main-layout {
@@ -10,7 +10,14 @@
   align-items: flex-start;
 }
 
-.sidebar, .folder-sidebar, .flashcard-section {
+/* Zentrierung der Sidebar- und Folder-Elemente */
+.sidebar, .folder-sidebar {
+  display: flex;
+  flex-direction: column;    /* Anordnung der Elemente in einer Spalte */
+  align-items: center;       /* Horizontale Zentrierung */
+  justify-content: center;   /* Vertikale Zentrierung */
+  height: 100%;              /* Höhe auf 100% setzen, um die komplette Höhe auszufüllen */
+  text-align: center;        /* Textzentrierung */
   background-color: #f7f7f7;
   padding: 10px;
   border-radius: 8px;
@@ -19,15 +26,22 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.sidebar, .folder-sidebar {
-  flex: 0 0 25%; /* Adjusts to approximately 4/24 and 6/24 */
+.sidebar {
+  flex: 0 0 25%; /* Anpassen der Breite auf ca. 4/24 */
+}
+
+.folder-sidebar {
+  flex: 0 0 25%; /* Anpassen der Breite auf ca. 6/24 */
 }
 
 .flashcard-section {
-  flex: 1; /* Takes the remaining space */
+  flex: 1; /* Die verbleibende Fläche einnehmen */
   background-color: #fff;
+  padding: 10px;
+  text-align: center; /* Zentriert den Titel und Schaltflächen */
 }
 
+/* Allgemeine Layout-Styles */
 .add-button {
   margin-bottom: 16px;
   display: block;
@@ -68,7 +82,7 @@ li:hover {
 }
 
 .flashcard {
-  width: calc(25% - 16px); /* Adjusts to fit 4 cards in a row */
+  width: calc(25% - 16px); /* Passt die Breite der Karten an, damit 4 Karten pro Reihe passen */
   min-width: 200px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
@@ -102,6 +116,7 @@ li:hover {
   margin-top: 8px;
   font-size: 0.9rem;
 }
+
 .selected-actions {
   margin-bottom: 8px;
   padding: 8px;
@@ -109,7 +124,8 @@ li:hover {
   flex-direction: column;
   align-items: flex-start;
 }
-.popup-buttons{
+
+.popup-buttons {
   margin-bottom: 8px;
   margin-top: 8px;
 }
@@ -118,13 +134,14 @@ li:hover {
   margin-top: 4px;
   width: 100%;
 }
+
 .flashcard-single {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 60vh;
-  text-align: center;
+  text-align: center; /* Zentriert den Text */
 }
 
 .flashcard-large {
@@ -136,13 +153,26 @@ li:hover {
   width: 80%;
   max-width: 600px;
   position: relative;
+  display: flex;
+  flex-direction: column; /* Wichtig, damit Frage und Antwort untereinander angezeigt werden */
+  align-items: center; /* Zentriert den Inhalt horizontal */
+}
+
+.flashcard-large h3 {
+  margin-bottom: 16px; /* Abstand zwischen Frage und Antwort */
+}
+
+.flashcard-large p {
+  margin-top: 8px; /* Etwas Abstand nach der Frage */
 }
 
 .navigation-buttons {
   margin-top: 16px;
   display: flex;
   gap: 16px;
+  justify-content: center; /* Zentriert die Navigationsbuttons */
 }
+
 .flashcard.selected {
   background-color: #e6f7ff; /* Leichtes Blau für den Hintergrund */
   border: 2px solid #1890ff; /* Blaue Umrandung */
@@ -158,6 +188,7 @@ li:hover {
   transform: scale(1.05);
   transition: all 0.2s ease-in-out;
 }
+
 /* Status-Indikator */
 .status-indicator {
   position: absolute;
@@ -182,5 +213,3 @@ li:hover {
 .count-two {
   background-color: #52c41a; /* Grün für `count === 2` */
 }
-
-

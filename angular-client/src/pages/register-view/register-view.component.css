@@ -1,40 +1,77 @@
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(to bottom right, #e3f2fd, #4a90e2);
+  color: #333;
+  height: 100vh;
+}
+
 .container {
+  padding: 24px;
+  min-height: 84vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  padding: 24px;
-  background-color: #f0f2f5;
 }
 
 .grid-container {
-  width: 90%;
-  padding: 2rem;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 24px;
+}
+
+h1, h2 {
+  text-align: center;
+  color: #4a90e2;
+}
+
+nz-form-item {
+  margin-bottom: 16px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  margin-top: 8px;
+  transition: background-color 0.3s;
+}
+
+button.primary {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+}
+
+button.primary:hover {
+  background-color: #3b78c2;
+}
+
+button.secondary {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+button.secondary:hover {
+  background-color: #e0e0e0;
+}
+
+.login-error {
+  text-align: center;
+  color: red;
+  margin-top: 16px;
 }
 
 .nz-divider {
   margin: 16px 0;
 }
 
-.login-button {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.register-button {
-  margin-top: 10px;
-}
-
-.info-text {
-  color: #595959;
-  text-align: center;
-}
-
 .error-message {
-  padding-top: 12px;
   text-align: center;
 }
 

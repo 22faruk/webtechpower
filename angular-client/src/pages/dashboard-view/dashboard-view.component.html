@@ -6,15 +6,21 @@
     </div>
     <div class="progress-container">
       <div class="progress-box">
-        <h3>Not Finished</h3>
+        <h3 data-description="Tasks that are not finished yet. Keep going to complete them!">Not Finished
+          <span class="tooltip">Tasks that are not finished yet. Keep going to complete them!</span>
+        </h3>
         <nz-progress [nzPercent]="stat_zero" nzType="circle" [nzWidth]="264"></nz-progress>
       </div>
       <div class="progress-box">
-        <h3>On Your Way</h3>
+        <h3 data-description="Tasks you are currently working on. Almost there!">On Your Way
+          <span class="tooltip">Tasks you are currently working on. Almost there!</span>
+        </h3>
         <nz-progress [nzPercent]="stat_once" nzType="circle" [nzWidth]="264"></nz-progress>
       </div>
       <div class="progress-box">
-        <h3>Ready</h3>
+        <h3 data-description="Tasks that are ready or completed. Great job!">Ready
+          <span class="tooltip">Tasks that are ready or completed. Great job!</span>
+        </h3>
         <nz-progress [nzPercent]="stat_good" nzType="circle" [nzWidth]="264"></nz-progress>
       </div>
     </div>
