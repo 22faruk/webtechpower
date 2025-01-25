@@ -33,7 +33,7 @@ export class NavigationBarComponent {
     this.router.navigate(['/friends']);
   }
 
-  logout(){
+  navigateToLogout() {
     localStorage.removeItem('SessionID')
     this.router.navigate(['/'])
   }

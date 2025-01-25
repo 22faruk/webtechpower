@@ -13,7 +13,11 @@ export class QuizService {
 
   constructor() { }
 
-  createQuiz(subjectId:string, directoryId: string){
+  createQuiz(subjectId: string, directoryId: string){
+    console.log(directoryId)
+    if (directoryId == 'undefined') {
+      return this.http.post<QuizResponse>(`${environment.api}/quiz/${subjectId}/`, null);
+    }
     return this.http.post<QuizResponse>(`${environment.api}/quiz/${subjectId}/${directoryId}`, null);
   }
 

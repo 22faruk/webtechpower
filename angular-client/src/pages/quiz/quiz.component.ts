@@ -4,7 +4,7 @@ import {NgForOf, NgIf} from '@angular/common';
 import {QuizService} from '../../services/quiz-service/quiz.service';
 import {GetQuestionResponse} from '../../models/response/getQuestion-response';
 import {SubjectService} from '../../services/subject-service/subject.service';
-import ISubject from '../../models/subject';
+import ISubject, {IDirectory} from '../../models/subject';
 import {SharedAntDesignModule} from '../../module/shared-ant-design/shared-ant-design.module';
 
 @Component({
@@ -26,11 +26,12 @@ export class QuizComponent implements OnInit{
   isCorrect:boolean = false;
   feedbackText:string='';
   selectedSubject!:ISubject
-  selectedDiretory:string=''
+  selectedDirectory?: IDirectory
   subjects!:ISubject[]
 
   quizService= inject(QuizService);
   subjectService = inject(SubjectService)
+  selectedAnswer: string='';
 
   ngOnInit(): void {
     this.subjectService.getSubjects().subscribe({
@@ -55,14 +56,22 @@ export class QuizComponent implements OnInit{
 
   createQuiz(){
     this.displayQuestion=true;
-    console.log(this.selectedSubject)
+    if (typeof this.selectedDirectory?._id === 'undefined') {
+      console.log('The variable is undefined');
+      this.quizService.createQuiz(this.selectedSubject._id,'undefined')
+    }
+    this.quizService.createQuiz(this.selectedSubject._id,String(this.selectedDirectory?._id)).subscribe({
+      next:(res) =>{
+        this.nextQuestion()
+      }
+    })
   }
 
   selectAnswer(answer: string) {
     this.quizService.validateQuestion(this.question.questionId, answer).subscribe({
       next: (res) =>{
-        this.isCorrect=res.data.isCorrect
-        if(this.isCorrect){
+        this.isCorrect=true
+        if(res.data.isCorrect){
           this.feedbackText='Your answer was correct!'
         }else {
           this.feedbackText='Your answer was incorrect!'
@@ -73,6 +82,7 @@ export class QuizComponent implements OnInit{
   }
 
   nextQuestion(){
+    this.isCorrect=false
     this.quizService.getNextQuestion().subscribe({
       next: (res:GetQuestionResponse) =>{
         this.question = res.data
@@ -83,5 +93,22 @@ export class QuizComponent implements OnInit{
         this.displayQuestion=false
       }
     })
+  }
+
+  selectSubject(subject: ISubject){
+    if (this.selectedSubject == subject){
+    }
+    else {
+      this.selectedSubject = subject;
+      this.selectedDirectory=undefined
+    }
+  }
+  selectFolder(folderName: IDirectory){
+    if (this.selectedDirectory == folderName){
+      this.selectedDirectory=undefined
+    }
+    else {
+      this.selectedDirectory = folderName;
+    }
   }
 }
