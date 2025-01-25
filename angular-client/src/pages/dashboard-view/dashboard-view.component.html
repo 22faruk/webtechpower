@@ -7,19 +7,19 @@
     <div class="progress-container">
       <div class="progress-box">
         <h3 data-description="Tasks that are not finished yet. Keep going to complete them!">Not Finished
-          <span class="tooltip">Tasks that are not finished yet. Keep going to complete them!</span>
+          <span class="tooltip">Flashcards that have not yet been answered correctly. Keep going to learn them!</span>
         </h3>
         <nz-progress [nzPercent]="stat_zero" nzType="circle" [nzWidth]="264"></nz-progress>
       </div>
       <div class="progress-box">
         <h3 data-description="Tasks you are currently working on. Almost there!">On Your Way
-          <span class="tooltip">Tasks you are currently working on. Almost there!</span>
+          <span class="tooltip">Flashcards that have been answered correctly once. Almost there!</span>
         </h3>
         <nz-progress [nzPercent]="stat_once" nzType="circle" [nzWidth]="264"></nz-progress>
       </div>
       <div class="progress-box">
         <h3 data-description="Tasks that are ready or completed. Great job!">Ready
-          <span class="tooltip">Tasks that are ready or completed. Great job!</span>
+          <span class="tooltip">Flashcards that have been answered correctly at least twice in a row. Great job!</span>
         </h3>
         <nz-progress [nzPercent]="stat_good" nzType="circle" [nzWidth]="264"></nz-progress>
       </div>
