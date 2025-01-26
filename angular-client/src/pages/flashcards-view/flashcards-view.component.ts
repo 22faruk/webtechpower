@@ -214,7 +214,7 @@ export class FlashcardsViewComponent implements OnInit{
         })
       }
       else {
-        this.subjectService.updateSubject(subjectId, subjectName, directory).subscribe({
+        this.subjectService.updateSubject(subjectId, subjectName).subscribe({
           next: () => {
             if (subjectName != "" && this.currentSubject) {
               this.currentSubject.subjectName = subjectName;
