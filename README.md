@@ -38,6 +38,7 @@ The application follows a typical MEAN stack architecture, structured as follows
 - Node.js (v14 or higher)
 - MongoDB (local or remote instance like MongoDB Atlas)
 - npm (Node Package Manager)
+- nodemon (Easier Development)
 
 ### Setup Instructions:
 
