@@ -8,7 +8,7 @@ const flashcardSchema = new Schema({
     ref: "User",
     required: true,
   },
-  question: { type: String, required: true },
+  question: { type: String, required: true},
   answer: { type: String, required: true },
   count: { type: Number, default: 0 },
 });

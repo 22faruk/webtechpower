@@ -20,12 +20,12 @@ const app = express();
 app.use(express.json());
 
 if (process.env.NODE_ENV !== "production") {
-  console.log("NODE_ENV", process.env.NODE_ENV);
-  app.use(
-    cors({
-      origin: ["http://localhost:4200", "http://localhost:5173,", "https://webtechtestdeploy-1.onrender.com"],
-    })
-  );
+    console.log("NODE_ENV", process.env.NODE_ENV);
+    app.use(
+        cors({
+            origin: ["http://localhost:4200", "http://localhost:5173,", "https://webtechtestdeploy-1.onrender.com"],
+        })
+    );
 }
 
 app.use("/todos", todoRouter);
@@ -42,15 +42,15 @@ app.use(errorHandler);
 
 app.use(express.static("../angular-client/dist/mean-lecture/browser"));
 app.get("*", (req, res) => {
-  res.sendFile(
-    path.resolve(
-      __dirname,
-      "../../angular-client/dist/mean-lecture/browser/index.html"
-    )
-  );
+    res.sendFile(
+        path.resolve(
+            __dirname,
+            "../../angular-client/dist/mean-lecture/browser/index.html"
+        )
+    );
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  connectDB();
+    console.log(`Server running on port ${PORT}`);
+    connectDB();
 });
