@@ -1,60 +1,64 @@
-# MEAN/MERN Stack Lecture
+# FUIZ: Quiz and Flashcard Platform
 
-## 🚀 Get Started
+## Project Description
+FUIZ is a web application built using the MEAN stack (MongoDB, Express.js, Angular, Node.js). The app aims to create a platform for users to create flashcards and either learn them the classic way or through automatically generated Quizzes . It integrates frontend Angular with a powerful backend using Node.js and Express.js, along with MongoDB for database management.
 
-#### Step 1: Pre-requisites
+## Features
+- **User Authentication**: Secure login and registration functionality using JWT.
+- **CRUD Operations**: Create, Read, Update, and Delete features for managing data.
+- **Responsive Design**: Optimized for both mobile and desktop devices.
 
-Download and install the following software:
 
-- Node.js on [Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-22-04)/[Windows](https://nodejs.org/dist/v20.17.0/)
-  - Preferred to install Node Version Manager (NVM) for [Ubuntu](https://tecadmin.net/how-to-install-nvm-on-ubuntu-22-04/)/[Windows](https://github.com/coreybutler/nvm-windows/releases).
-  - Open a terminal and then type `nvm install 20.17.0` to install Node.js v20.17.0
-  - Then type `nvm use 20.17.0` to use the Node.js v20.17.0 to install node packages
-- Code editor
-  - Visual Studio Code (VSCode) ([official Link](https://code.visualstudio.com/Download))
-  - IntelliJ Ultimate [Ubuntu](https://www.golinuxcloud.com/install-maven-ubuntu/)/[Windows](https://www.jetbrains.com/de-de/idea/download/#section=windows)
-- Git on [Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-22-04#installing-git-with-default-packages)/ [Windows](https://git-scm.com/downloads)
-- Github Desktop on [Ubuntu](https://www.linuxcapable.com/how-to-install-github-desktop-on-ubuntu-linux/)/[Windows](https://desktop.github.com/)
-- MongoDB Community Server (latest) [Ubuntu](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/#install-mongodb-community-edition)/[Windows](https://www.mongodb.com/try/download/community). Additionally, install MongoDB Compass [Ubuntu](https://www.mongodb.com/try/download/shell)/[Windows](https://www.mongodb.com/try/download/compass)
-- Postman on [Ubuntu](https://itslinuxfoss.com/how-to-install-postman-on-ubuntu-22-04/)/[Windows](https://www.postman.com/downloads/)
+![Screenshot 1](/screen1.png)
+![Screenshot 2](/screen2.png)
 
-#### Step 2: Clone the repository
+## Technical Architecture
+The application follows a typical MEAN stack architecture, structured as follows:
 
-- If you have GitHub Desktop installed
-  - Clone the repository by clicking the green `Code` button and then `Open with GitHub Desktop`.
-  - Select the location where you want to clone the repository and click the `Clone` button.
-- Open a terminal and type the command below to clone the repository.
-  ```bash
-  git clone https://github.com/shoebjoarder/mean-mern-stack-lecture
-  ```
 
-#### Step 3: Install dependencies and run codes
+- **Frontend**: The Angular app consumes RESTful APIs provided by the backend and displays data dynamically.
+- **Backend**: Node.js server using Express.js to handle requests, validate data, and interact with the MongoDB database.
+- **Database**: MongoDB stores user and application data, offering scalability and flexibility.
 
-- Open the project using a code editor.
-- In VSCode, click the `Terminal` menu from the top menu and click `New Terminal`.
-- Switch between branches to view the different topics. Type `git checkout <branch_name>` in the terminal to switch between the branches. Remember to replace `<branch_name>` with the actual branch name, e.g.,
-  ```bash
-  git checkout 1-mern-stack
-  ```
-- Open the terminal, move to the `react-client` directory and type the following command to install the node packages.
-  ```bash
-  npm ci
-  ```
-  - If you get an error, try typing the `npm install` or `npm install --force` command.
-- Run the following command in the terminal to start the React application.
-  ```bash
-  npm run dev
-  ```
-- Then move to the `server` directory and type the following command to install the node packages.
-  ```bash
-  npm ci
-  ```
-  - If you get an error, try typing the `npm install` or `npm install --force` command.
-- Install `nodemon` globally
-  ```
-  npm i -g nodemon
-  ```
-- Run the following command in the terminal to start the server.
-  ```bash
-  npm run server
-  ```
+## Technologies/Libraries Used
+- **MongoDB**: NoSQL database used to store application data.
+- **Express.js**: Web application framework for Node.js.
+- **Angular**: Frontend framework to build a responsive and dynamic user interface.
+- **Node.js**: JavaScript runtime for the server-side logic.
+- **Mongoose**: ODM for MongoDB to manage database interactions.
+- **JWT (JSON Web Tokens)**: For user authentication and session management.
+- **Ng-Zorro**: For responsive and sleek UI design.
+- **Bcrypt.js**: For password hashing and encryption.
+- **Nodemon**: Tool for auto-reloading the server during development.
+- **Cors**: Middleware for enabling cross-origin requests.
+
+## How to Run the Project
+
+### Prerequisites:
+- Node.js (v14 or higher)
+- MongoDB (local or remote instance like MongoDB Atlas)
+- npm (Node Package Manager)
+
+### Setup Instructions:
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/22faruk/webtechpower
+2. **Checkout to the branch**
+   ```bash
+   git checkout 2-mean-stack
+3. **Install the dependencies: Navigate to the root directory and run the following command to install backend dependencies:**
+    ```bash
+    cd server
+    npm install
+4. **Then, go to the Angular project directory and install frontend dependencies:**
+    ```bash
+    cd angular-client
+    npm install
+5. **Running the backend: Navigate to the backend directory and run the following command:**
+    ```bash
+    npm run server
+6. **Running the frontend: Open a new terminal, navigate to the frontend directory, and run:**
+    ```bash
+    ng serve
+7. **Access the Application: Open your browser and navigate to http://localhost:4200 to see the app in action.**
