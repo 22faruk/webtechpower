@@ -302,6 +302,10 @@ export class FlashcardsViewComponent implements OnInit{
     else {
       this.currentSubject = subject;
       this.showChnageDeletePopopSubject = true;
+      this.currentFolder = null;
+      this.showChnageDeletePopopFolder = false;
+      this.currentFlashcard = null;
+      this.showChangeDeletePopupFlashcard = false;
     }
   }
   editFolder(folder: IDirectory){
@@ -311,6 +315,9 @@ export class FlashcardsViewComponent implements OnInit{
     else {
       this.currentFolder = folder;
       this.showChnageDeletePopopFolder = true;
+      this.currentFlashcard = null;
+      this.showChangeDeletePopupFlashcard = false;
+      this.maxLength = this.currentFolder.flashcards.length - 1;
     }
   }
   editFlashcard(flashcard: IFlashcard){
