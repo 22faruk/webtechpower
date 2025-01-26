@@ -19,12 +19,19 @@
 
         <nz-divider></nz-divider>
         <ul>
-          <li *ngFor="let subject of subjects" (click)="selectSubject(subject)" [class.active]="subject === currentSubject">
+          <li
+            *ngFor="let subject of subjects"
+            (click)="selectSubject(subject)"
+            [class.active]="subject === currentSubject">
             {{ subject.subjectName }}
+            <button class="edit-button" (click)="editSubject(subject)">
+              ✏️
+            </button>
           </li>
         </ul>
-        <nz-divider *ngIf="currentSubject"></nz-divider>
-        <div *ngIf="currentSubject && !showChangeSubjectModal && showButtonsSubject" class="selected-actions">
+
+        <nz-divider *ngIf="showChnageDeletePopopSubject"></nz-divider>
+        <div *ngIf="showChnageDeletePopopSubject" class="selected-actions">
           <button nz-button nzType="default" (click)="deleteSubject()">Delete</button>
           <button nz-button nzType="primary" (click)="showSubjectChangeModal()">Change</button>
         </div>
@@ -62,12 +69,15 @@
           <div *ngIf="currentSubject">
             <li *ngFor="let folder of currentSubject.directories" (click)="selectFolder(folder)" [class.active]="folder === currentFolder">
               {{ folder.folderName }}
+              <button class="edit-button" (click)="editFolder(folder)">
+                ✏️
+              </button>
             </li>
           </div>
         </ul>
 
-        <nz-divider *ngIf="currentFolder"></nz-divider>
-        <div *ngIf="currentFolder && !showChangeFolderModal && showButtonsFolder" class="selected-actions">
+        <nz-divider *ngIf="showChnageDeletePopopFolder"></nz-divider>
+        <div *ngIf="showChnageDeletePopopFolder" class="selected-actions">
           <button nz-button nzType="default" (click)="deleteFolder()">Delete</button>
           <button nz-button nzType="primary" (click)="showFolderChangeModal()">Change</button>
         </div>
@@ -106,8 +116,8 @@
           <button nz-button nzType="primary" (click)="toggleFlashcardView(false)">Single View</button>
           <button nz-button nzType="primary" (click)="toggleFlashcardView(true)">Multi View</button>
           <button nz-button nzType="default" (click)="sortFlashcards()">Sort</button>
-          <button nz-button nzType="primary" *ngIf="currentFlashcard" (click)="openUpdateFlashcard()">Change</button>
-          <button nz-button nzType="primary" *ngIf="currentFlashcard" (click)="deleteFlashcard()">Delete</button>
+          <button nz-button nzType="primary" *ngIf="showChangeDeletePopupFlashcard" (click)="openUpdateFlashcard()">Change</button>
+          <button nz-button nzType="primary" *ngIf="showChangeDeletePopupFlashcard" (click)="deleteFlashcard()">Delete</button>
         </div>
         <div class="popup-overlay" *ngIf="openFlashcardUpdate">
           <div class="popup">
@@ -125,6 +135,9 @@
                (click)="selectFlashcard(card)"
                class="flashcard"
                [class.selected]="card == currentFlashcard">
+            <button class="edit-button" (click)="editFlashcard(card)">
+              ✏️
+            </button>
             <!-- Punkt/Viereck abhängig von `count` -->
             <div class="status-indicator"
                  [ngClass]="{
@@ -146,6 +159,9 @@
         <div *ngIf="currentFolder && !flashcardViewMulti" class="flashcard-single">
           <div class="flashcard-large" [class.selected]="currentFolder.flashcards[currentFlashcardIndex] == currentFlashcard" (click)="selectFlashcard(currentFolder.flashcards[currentFlashcardIndex])">
             <div *ngIf="currentFolder?.flashcards?.[currentFlashcardIndex] as currentFlashcard">
+              <button class="edit-button" (click)="editFlashcard(currentFlashcard)">
+                ✏️
+              </button>
               <div class="status-indicator"
                    [ngClass]="{
            'count-zero': currentFlashcard.count === 0,

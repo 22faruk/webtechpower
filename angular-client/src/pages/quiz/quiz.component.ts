@@ -68,6 +68,7 @@ export class QuizComponent implements OnInit{
   }
 
   selectAnswer(answer: string) {
+    this.selectedAnswer=answer;
     this.quizService.validateQuestion(this.question.questionId, answer).subscribe({
       next: (res) =>{
         this.isCorrect=true
@@ -83,6 +84,7 @@ export class QuizComponent implements OnInit{
 
   nextQuestion(){
     this.isCorrect=false
+    this.selectedAnswer = '';
     this.quizService.getNextQuestion().subscribe({
       next: (res:GetQuestionResponse) =>{
         this.question = res.data

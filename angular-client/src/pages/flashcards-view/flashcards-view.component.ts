@@ -37,8 +37,9 @@ export class FlashcardsViewComponent implements OnInit{
   maxLength : number = 0;
   openFlashcardUpdate: boolean = false;
   isAscending: boolean = true;
-  showButtonsSubject: boolean = true;
-  showButtonsFolder: boolean = true;
+  showChnageDeletePopopSubject: boolean = false;
+  showChnageDeletePopopFolder: boolean = false;
+  showChangeDeletePopupFlashcard: boolean = false;
 
   flashcardService = inject(FlashcardsService)
   subjectService = inject(SubjectService)
@@ -61,25 +62,30 @@ export class FlashcardsViewComponent implements OnInit{
   }
 
   selectSubject(subject: ISubject){
-    if (this.currentSubject == subject){
-      this.showButtonsSubject = !this.showButtonsSubject;
-    }
-    else {
-      this.showButtonsSubject = true;
+    if (this.currentSubject != subject){
       this.currentSubject = subject;
+      this.showChnageDeletePopopSubject = false;
+      this.currentFolder = null;
+      this.showChnageDeletePopopFolder = false;
+      this.currentFlashcard = null;
+      this.showChangeDeletePopupFlashcard = false;
     }
   }
-  selectFolder(folderName: IDirectory){
-    if (this.currentFolder == folderName){
-      this.showButtonsFolder = !this.showButtonsFolder;
-    }
-    else {
-      this.showButtonsFolder = true;
-      this.currentFolder = folderName;
+  selectFolder(folder: IDirectory){
+    if (this.currentFolder != folder){
+      this.currentFolder = folder;
+      this.showChnageDeletePopopFolder = false;
+      this.currentFlashcard = null;
+      this.showChangeDeletePopupFlashcard = false;
       this.maxLength = this.currentFolder.flashcards.length - 1;
     }
   }
-
+  selectFlashcard(card: IFlashcard){
+    if (this.currentFlashcard != card){
+      this.currentFlashcard = card;
+      this.showChangeDeletePopupFlashcard = false;
+    }
+  }
   updateFlashcard(newQuestion: string, newAnswer: string, card: IFlashcard|null) {
     if (this.currentFlashcard && card) {
       const flashcardId: string = card._id;
@@ -231,12 +237,14 @@ export class FlashcardsViewComponent implements OnInit{
     if (multiOrSingle != this.flashcardViewMulti) {
       this.currentFlashcard = null;
       this.flashcardViewMulti = multiOrSingle;
+      this.showChangeDeletePopupFlashcard = false;
     }
   }
   goToPrevious() {
     if (this.currentFlashcardIndex > 0) {
       this.currentFlashcardIndex--;
       this.currentFlashcard = null;
+      this.showChangeDeletePopupFlashcard = false;
     }
   }
 
@@ -245,13 +253,9 @@ export class FlashcardsViewComponent implements OnInit{
       if (this.currentFlashcardIndex < this.currentFolder.flashcards.length - 1) {
         this.currentFlashcardIndex++;
         this.currentFlashcard = null;
+        this.showChangeDeletePopupFlashcard = false;
       }
     }
-  }
-  selectFlashcard(card: IFlashcard){
-    this.currentFlashcard = card;
-    console.log(this.currentFlashcard.answer);
-    console.log(this.currentFlashcard._id)
   }
   openUpdateFlashcard(){
     this.openFlashcardUpdate = true;
@@ -289,6 +293,33 @@ export class FlashcardsViewComponent implements OnInit{
         this.isAscending ? a.count - b.count : b.count - a.count
       );
       this.isAscending = !this.isAscending;
+    }
+  }
+  editSubject(subject: ISubject){
+    if (this.currentSubject == subject) {
+      this.showChnageDeletePopopSubject = !this.showChnageDeletePopopSubject;
+    }
+    else {
+      this.currentSubject = subject;
+      this.showChnageDeletePopopSubject = true;
+    }
+  }
+  editFolder(folder: IDirectory){
+    if (this.currentFolder == folder) {
+      this.showChnageDeletePopopFolder = !this.showChnageDeletePopopFolder;
+    }
+    else {
+      this.currentFolder = folder;
+      this.showChnageDeletePopopFolder = true;
+    }
+  }
+  editFlashcard(flashcard: IFlashcard){
+    if (this.currentFlashcard == flashcard) {
+      this.showChangeDeletePopupFlashcard = !this.showChangeDeletePopupFlashcard;
+    }
+    else {
+      this.currentFlashcard = flashcard;
+      this.showChangeDeletePopupFlashcard = true;
     }
   }
 }
