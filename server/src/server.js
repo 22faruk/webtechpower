@@ -23,7 +23,7 @@ if (process.env.NODE_ENV !== "production") {
   console.log("NODE_ENV", process.env.NODE_ENV);
   app.use(
     cors({
-      origin: ["http://localhost:4200", "http://localhost:5173"],
+      origin: ["http://localhost:4200", "http://localhost:5173,", "https://webtechtestdeploy-1.onrender.com"],
     })
   );
 }
